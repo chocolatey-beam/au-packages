@@ -52,7 +52,7 @@ Full documentation available at [rebar3.org/docs](https://rebar3.org/docs)
     <copyright>Copyright (c) 2009 Dave Smith</copyright>
     <licenseUrl>https://github.com/erlang/rebar3/blob/main/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <iconUrl>https://github.com/chocolatey-beam/rebar3-package/raw/main/rebar3-logo.png</iconUrl>
+    <iconUrl>https://github.com/chocolatey-beam/au-packages/raw/main/rebar3/rebar3-logo.png</iconUrl>
     <docsUrl>http://rebar3.org/docs</docsUrl>
     <mailingListUrl>https://github.com/erlang/rebar3#additional-resources</mailingListUrl>
     <bugTrackerUrl>https://github.com/erlang/rebar3/issues</bugTrackerUrl>
