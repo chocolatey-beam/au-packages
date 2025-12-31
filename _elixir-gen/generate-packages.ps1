@@ -97,6 +97,7 @@ foreach ($pkg in $packagesToGenerate)
     Copy-Item "$PSScriptRoot\tools\chocolateyInstall.ps1" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\tools\chocolateyUninstall.ps1" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\tools\VERIFICATION.txt" "$packageDir\tools\" -Force
+    Copy-Item "$PSScriptRoot\tools\LICENSE.txt" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\tools\.skipAutoUninstall" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\README.md" "$packageDir\" -Force
     Copy-Item "$PSScriptRoot\elixir-icon.png" "$packageDir\" -Force
