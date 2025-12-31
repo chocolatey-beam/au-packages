@@ -1,46 +1,52 @@
-import-module au
+Import-Module au
 
 $releases = 'http://guysalias.tk/misc/less/'
 
-function global:au_SearchReplace {
+function global:au_SearchReplace
+{
     @{
         ".\tools\VERIFICATION.txt" = @{
-          "(?i)(\s+x32:).*"        = "`${1} $($Latest.URL32)"
-          "(?i)(checksum32:).*"    = "`${1} $($Latest.Checksum32)"
+            "(?i)(\s+x32:).*" = "`${1} $($Latest.URL32)"
+            "(?i)(checksum32:).*" = "`${1} $($Latest.Checksum32)"
         }
     }
 }
 
-function global:au_BeforeUpdate {
-    set-alias 7z $Env:chocolateyInstall\tools\7z.exe
+function global:au_BeforeUpdate
+{
+    Set-Alias 7z $Env:chocolateyInstall\tools\7z.exe
 
     $lessdir = "$PSScriptRoot\less-*-win*"
-    rm $lessdir -Recurse -Force -ea ignore
+    Remove-Item $lessdir -Recurse -Force -ea ignore
 
-    iwr $Latest.URL32 -OutFile "$PSScriptRoot\less.7z"
+    Invoke-WebRequest $Latest.URL32 -OutFile "$PSScriptRoot\less.7z"
     7z x $PSScriptRoot\less.7z
 
-    rm $PSScriptRoot\tools\* -Recurse -Force -Exclude VERIFICATION.txt
-    mv $lessdir\* $PSScriptRoot\tools -Force
-    rm $lessdir -Recurse -Force -ea ignore
-    rm $PSScriptRoot\less.7z -ea ignore
+    Remove-Item $PSScriptRoot\tools\* -Recurse -Force -Exclude VERIFICATION.txt
+    Move-Item $lessdir\* $PSScriptRoot\tools -Force
+    Remove-Item $lessdir -Recurse -Force -ea ignore
+    Remove-Item $PSScriptRoot\less.7z -ea ignore
 }
 
-function global:au_GetLatest {
+function global:au_GetLatest
+{
     $download_page = Invoke-WebRequest -Uri $releases -UseBasicParsing
 
-    $re  = 'less-.+win.+\.7z$'
-    $url = $download_page.links | ? href -match $re | select -First 1 -expand href
-    $version = "$( ($url -split '-' | select -Index 1) / 100 )"
+    $re = 'less-.+win.+\.7z$'
+    $url = $download_page.links | Where-Object href -Match $re | Select-Object -First 1 -expand href
+    $version = "$( ($url -split '-' | Select-Object -Index 1) / 100 )"
     @{
-       URL32   = $releases + $url
-       Version = $version
+        URL32 = $releases + $url
+        Version = $version
     }
 }
 
-try {
-    update -ChecksumFor none
-} catch {
+try
+{
+    Update-Package -ChecksumFor none
+}
+catch
+{
     $ignore = 'Unable to connect to the remote server'
     if ($_ -match $ignore) { Write-Host $ignore; 'ignore' }  else { throw $_ }
 }
