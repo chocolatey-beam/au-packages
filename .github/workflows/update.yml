@@ -19,6 +19,6 @@ jobs:
       - shell: pwsh
         run: Install-Module -Name AU -Force -Scope CurrentUser
       - shell: pwsh
-        run: ${{ github.workspace }}\elixir-gen\generate-packages.ps1
+        run: ${{ github.workspace }}\_elixir-gen\generate-packages.ps1
       - shell: pwsh
         run: ${{ github.workspace }}\update_all.ps1
