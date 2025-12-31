@@ -112,7 +112,7 @@ $Options = [ordered]@{
 if ($ForcedPackages) { Write-Information "FORCED PACKAGES: $ForcedPackages" }
 $global:au_Root = $Root          #Path to the AU packages
 $global:au_GalleryUrl = ''             #URL to package gallery, leave empty for Chocolatey Gallery
-$global:info = Update-AuPackages -Name $Name -Options $Options
+$global:info = Update-AUPackages -Name $Name -Options $Options
 
 #Uncomment to fail the build on AppVeyor on any package error
 #if ($global:info.error_count.total) { throw 'Errors during update' }

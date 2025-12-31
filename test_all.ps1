@@ -9,7 +9,7 @@ $global:au_root = Resolve-Path $Root
 
 if (($Name.Length -gt 0) -and ($Name[0] -match '^random (.+)'))
 {
-    [array] $lsau = Get-AuPackages
+    [array] $lsau = Get-AUPackages
 
     $group = [int]$Matches[1]
     $n = (Get-Random -Maximum $group)
@@ -70,7 +70,7 @@ $options = [ordered]@{
 }
 
 
-$global:info = Update-AuPackages -Name $Name -Options $Options
+$global:info = Update-AUPackages -Name $Name -Options $Options
 
 $au_errors = $global:info | Where-Object { $_.Error } | Select-Object -ExpandProperty Error
 
