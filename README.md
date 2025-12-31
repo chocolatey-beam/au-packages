@@ -1,5 +1,8 @@
 # Chocolatey AU Packages
 
+[![update-au-packages](https://github.com/chocolatey-beam/au-packages/actions/workflows/update.yml/badge.svg)](https://github.com/chocolatey-beam/au-packages/actions/workflows/update.yml)
+[![validate-powershell-scripts](https://github.com/chocolatey-beam/au-packages/actions/workflows/validate.yml/badge.svg)](https://github.com/chocolatey-beam/au-packages/actions/workflows/validate.yml)
+
 This repository contains Chocolatey packages managed with the [AU (Automatic Updater)](https://github.com/majkinetor/au) framework.
 
 ## Packages
