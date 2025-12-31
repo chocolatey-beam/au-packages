@@ -105,34 +105,10 @@ foreach ($pkg in $packagesToGenerate)
 }
 
 Write-Information ""
-Write-Information "All packages generated. Running AU updates..."
-
-# Now run AU update on each generated package
-$results = @()
+Write-Information "All $($packagesToGenerate.Count) packages generated successfully"
+Write-Information ""
+Write-Information "Generated packages:"
 foreach ($pkg in $packagesToGenerate)
 {
-    $packageName = $pkg.Name
-    $packageDir = Join-Path -Path $PSScriptRoot -ChildPath "..\$packageName"
-
-    Write-Information ""
-    Write-Information "Updating package: $packageName"
-
-    Push-Location $packageDir
-    try
-    {
-        $result = & .\update.ps1
-        $results += $result
-    }
-    finally
-    {
-        Pop-Location
-    }
+    Write-Information "  - $($pkg.Name) (OTP $($pkg.OtpMajor))"
 }
-
-Write-Information ""
-Write-Information "=== Summary ==="
-Write-Information "Processed $($results.Count) packages"
-$updated = $results | Where-Object { $_.Updated }
-Write-Information "Updated: $($updated.Count)"
-
-$results
