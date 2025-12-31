@@ -202,7 +202,14 @@ Before committing changes to a package:
 3. ✅ Verify nupkg contents: `7z l package.nupkg`
 4. ✅ Check file sizes and names are correct
 5. ✅ Verify VERIFICATION.txt has correct checksum
-6. ✅ Test in fresh PowerShell session (avoid stale functions)
+6. ✅ Test installation locally:
+   ```powershell
+   choco install packagename --version X.Y.Z --source ".;https://chocolatey.org/api/v2/" --yes
+   ```
+   Note: Include chocolatey.org source to resolve dependencies
+7. ✅ Verify package functionality (run the installed software)
+8. ✅ Test uninstallation: `choco uninstall packagename --yes`
+9. ✅ Test in fresh PowerShell session (avoid stale functions)
 
 ## Workflow
 

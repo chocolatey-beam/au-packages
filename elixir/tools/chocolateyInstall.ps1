@@ -1,0 +1,57 @@
+﻿<#
+.SYNOPSIS
+Installs Elixir programming language
+
+.NOTES
+Author: Luke Bakken - luke@bakken.io
+#>
+
+$ErrorActionPreference = 'Stop'
+$InformationPreference = 'Continue'
+
+$packageName = 'elixir'
+$version = '1.19.4'
+$otpMajorVersion = '28'
+
+$toolsDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$zipFile = Join-Path -Path $toolsDir -ChildPath 'elixir.zip'
+
+# Verify the embedded file exists
+if (-not (Test-Path -LiteralPath $zipFile))
+{
+    throw "Elixir zip file not found at $zipFile"
+}
+
+Write-Information "Installing Elixir $version for OTP $otpMajorVersion..."
+
+$packageArgs = @{
+    PackageName = $packageName
+    FileType = 'zip'
+    File64 = $zipFile
+    UnzipLocation = $toolsDir
+}
+
+Install-ChocolateyZipPackage @packageArgs
+
+# Remove the zip file after extraction
+Remove-Item -LiteralPath $zipFile -Force -ErrorAction SilentlyContinue
+
+$elixirBin = Join-Path -Path $toolsDir -ChildPath 'bin'
+
+Write-Information @"
+------------------------------------------------------------------------
+Elixir $version has been installed to:
+
+$elixirBin
+
+The following commands are now available:
+- elixir
+- elixirc
+- mix
+- iex
+
+Note: Elixir executables are automatically added to PATH by Chocolatey.
+------------------------------------------------------------------------
+"@
+
+Write-Information "Elixir installed successfully"
