@@ -10,9 +10,9 @@ function global:au_SearchReplace
         }
 
         ".\tools\VERIFICATION.txt" = @{
-            "(?i)(Version\s*:).*"     = "`${1} $($Latest.Version)"
-            "(?i)(URL\s*:).*"         = "`${1} $($Latest.URL64)"
-            "(?i)(Checksum\s*:).*"    = "`${1} $($Latest.Checksum64)"
+            "(?i)(Version\s*:).*" = "`${1} $($Latest.Version)"
+            "(?i)(URL\s*:).*" = "`${1} $($Latest.URL64)"
+            "(?i)(Checksum\s*:).*" = "`${1} $($Latest.Checksum64)"
         }
 
         "$($Latest.PackageName).nuspec" = @{
