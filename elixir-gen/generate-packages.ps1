@@ -47,7 +47,7 @@ foreach ($otpMajor in $supportedOtpVersions)
         OtpMajor = $otpMajor
         Title = "Elixir (OTP $otpMajor)"
     }
-    
+
     # For latest OTP, also create "elixir" package
     if ($otpMajor -eq $latestOtpMajor)
     {
@@ -67,32 +67,32 @@ foreach ($pkg in $packagesToGenerate)
     $otpMajor = $pkg.OtpMajor
     $title = $pkg.Title
     $packageDir = Join-Path -Path $PSScriptRoot -ChildPath "..\$packageName"
-    
+
     Write-Information ""
     Write-Information "Generating package: $packageName (OTP $otpMajor)"
-    
+
     # Create package directory structure
     if (-not (Test-Path $packageDir))
     {
         New-Item -ItemType Directory -Path $packageDir | Out-Null
         New-Item -ItemType Directory -Path "$packageDir\tools" | Out-Null
     }
-    
+
     # Generate files from templates
     $erlangDep = "[$otpMajor.0,$($otpMajor + 1).0)"
-    
+
     # Generate nuspec
     $nuspecContent = Get-Content "$PSScriptRoot\templates\nuspec.template" -Raw
     $nuspecContent = $nuspecContent -replace '@@PACKAGE_ID@@', $packageName
     $nuspecContent = $nuspecContent -replace '@@TITLE@@', $title
     $nuspecContent = $nuspecContent -replace '@@ERLANG_DEPENDENCY@@', $erlangDep
     Set-Content -Path "$packageDir\$packageName.nuspec" -Value $nuspecContent
-    
+
     # Generate update.ps1
     $updateContent = Get-Content "$PSScriptRoot\templates\update.ps1.template" -Raw
     $updateContent = $updateContent -replace '@@OTP_MAJOR@@', $otpMajor
     Set-Content -Path "$packageDir\update.ps1" -Value $updateContent
-    
+
     # Copy static files
     Copy-Item "$PSScriptRoot\tools\chocolateyInstall.ps1" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\tools\chocolateyUninstall.ps1" "$packageDir\tools\" -Force
@@ -100,7 +100,7 @@ foreach ($pkg in $packagesToGenerate)
     Copy-Item "$PSScriptRoot\tools\.skipAutoUninstall" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\README.md" "$packageDir\" -Force
     Copy-Item "$PSScriptRoot\elixir-icon.png" "$packageDir\" -Force
-    
+
     Write-Information "Package $packageName generated successfully"
 }
 
@@ -113,10 +113,10 @@ foreach ($pkg in $packagesToGenerate)
 {
     $packageName = $pkg.Name
     $packageDir = Join-Path -Path $PSScriptRoot -ChildPath "..\$packageName"
-    
+
     Write-Information ""
     Write-Information "Updating package: $packageName"
-    
+
     Push-Location $packageDir
     try
     {
