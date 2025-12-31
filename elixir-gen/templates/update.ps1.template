@@ -2,7 +2,7 @@ Import-Module au
 
 $InformationPreference = 'Continue'
 
-$otpMajorVersion = 27
+$otpMajorVersion = @@OTP_MAJOR@@
 
 function global:au_SearchReplace
 {
@@ -28,7 +28,7 @@ function global:au_BeforeUpdate
 {
     Get-RemoteFiles -Purge -NoSuffix
 
-    # Rename from elixir-otp-28.zip to elixir.zip for simpler install script
+    # Rename from elixir-otp-N.zip to elixir.zip for simpler install script
     $source = Join-Path -Path 'tools' -ChildPath "elixir-otp-$otpMajorVersion.zip"
     $dest = Join-Path -Path 'tools' -ChildPath 'elixir.zip'
     Move-Item -LiteralPath $source -Destination $dest -Force

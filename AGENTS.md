@@ -171,9 +171,6 @@ au-packages/
 ├── .github/workflows/
 │   ├── validate.yml       # PSScriptAnalyzer on every push/PR
 │   └── update.yml         # Weekly AU updates
-├── _scripts/
-│   ├── all.ps1            # Sources all helper scripts
-│   └── Set-DescriptionFromReadme.ps1  # Updates nuspec from README
 ├── rebar3/
 │   ├── update.ps1         # AU update script
 │   ├── rebar3.nuspec      # Package metadata
