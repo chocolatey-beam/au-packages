@@ -1,4 +1,4 @@
-﻿#http://help.preyproject.com/article/188-prey-unattended-install-for-computers
+#http://help.preyproject.com/article/188-prey-unattended-install-for-computers
 
 $ErrorActionPreference = 'Stop'
 

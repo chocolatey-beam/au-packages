@@ -1,4 +1,4 @@
-﻿import-module au
+import-module au
 
 $domain   = 'https://github.com'
 $releases = "$domain/LibreCAD/LibreCAD/releases/latest"
