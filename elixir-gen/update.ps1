@@ -1,4 +1,4 @@
-Import-Module au
+Import-Module AU
 
 $InformationPreference = 'Continue'
 
