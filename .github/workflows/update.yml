@@ -10,6 +10,7 @@ jobs:
     runs-on: windows-latest
     env:
       au_Push: 'true'
+      au_ForcePush: null
       GH_TOKEN: ${{ github.token }}
       github_api_key: ${{ secrets.API_KEY }}
       api_key: ${{ secrets.CHOCOLATEY_API_KEY }}
