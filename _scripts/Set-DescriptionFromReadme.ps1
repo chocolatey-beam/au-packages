@@ -1,4 +1,5 @@
 <#
+$InformationPreference = 'Continue'
 .SYNOPSIS
   Updates nuspec file description from README.md
 
@@ -21,7 +22,7 @@ function Set-DescriptionFromReadme([int]$SkipFirst = 0, [int]$SkipLast = 0)
 {
     if (!(Test-Path README.md)) { throw 'Set-DescriptionFromReadme: README.md not found' }
 
-    Write-Host 'Setting README.md to Nuspec description tag'
+    Write-Information 'Setting README.md to Nuspec description tag'
     $description = Get-Content README.md -Encoding UTF8
     $endIdx = $description.Length - $SkipLast
     $description = $description | Select-Object -Index ($SkipFirst..$endIdx) | Out-String

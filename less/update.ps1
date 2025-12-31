@@ -1,4 +1,5 @@
 Import-Module au
+$InformationPreference = 'Continue'
 
 $releases = 'http://guysalias.tk/misc/less/'
 
@@ -48,5 +49,5 @@ try
 catch
 {
     $ignore = 'Unable to connect to the remote server'
-    if ($_ -match $ignore) { Write-Host $ignore; 'ignore' }  else { throw $_ }
+    if ($_ -match $ignore) { Write-Information $ignore; 'ignore' }  else { throw $_ }
 }

@@ -11,6 +11,9 @@
    Example:
      iwr https://goo.gl/SZ9c3m | iex; cinst-gh furmark --force
 #>
+
+$InformationPreference = 'Continue'
+
 function cinst-gh
 {
     $Repo = "https://github.com/majkinetor/au-packages/tree/master"
@@ -24,6 +27,6 @@ function cinst-gh
     Invoke-WebRequest "$raw/$(($p -split '\.')[0])/$p" -Out $p
     $a = $args | Select-Object -Skip 1
     $cmd = "cinst $p $a"
-    Write-Host $cmd; Invoke-Expression $cmd
+    Write-Information $cmd; Invoke-Expression $cmd
     Remove-Item $p
 }

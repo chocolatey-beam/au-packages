@@ -2,6 +2,8 @@
 
 param([string[]] $Name, [string] $ForcedPackages, [string] $Root = $PSScriptRoot)
 
+$InformationPreference = 'Continue'
+
 if (Test-Path $PSScriptRoot/update_vars.ps1) { . $PSScriptRoot/update_vars.ps1 }
 
 $Options = [ordered]@{
@@ -107,7 +109,7 @@ $Options = [ordered]@{
     }
 }
 
-if ($ForcedPackages) { Write-Host "FORCED PACKAGES: $ForcedPackages" }
+if ($ForcedPackages) { Write-Information "FORCED PACKAGES: $ForcedPackages" }
 $global:au_Root = $Root          #Path to the AU packages
 $global:au_GalleryUrl = ''             #URL to package gallery, leave empty for Chocolatey Gallery
 $global:info = Update-AuPackages -Name $Name -Options $Options

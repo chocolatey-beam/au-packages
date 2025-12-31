@@ -22,11 +22,11 @@ $allPassed = $true
 
 foreach ($file in $filesToCheck)
 {
-    Write-Information "Analyzing $($file.FullName)..." -InformationAction Continue
+    Write-Information "Analyzing $($file.FullName)..."
     $results = Invoke-ScriptAnalyzer -Path $file.FullName -Settings $settingsPath -ExcludeRule @(
         'PSReviewUnusedParameter'                       # False positive for parameters used in scriptblocks
         'PSAvoidGlobalVars'                             # Required by AU framework
-        'PSAvoidUsingWriteHost'                         # AU framework uses Write-Host
+        'PSAvoidUsingWriteHost'                         # AU framework uses Write-Information
         'PSAvoidUsingCmdletAliases'                     # AU framework uses aliases
         'PSUseShouldProcessForStateChangingFunctions'   # Helper functions don't need ShouldProcess
         'PSAvoidUsingInvokeExpression'                  # Used in cinst-gh.ps1
@@ -42,7 +42,7 @@ foreach ($file in $filesToCheck)
 
 if ($allPassed)
 {
-    Write-Information "All checks passed!" -InformationAction Continue
+    Write-Information "All checks passed!"
     exit 0
 }
 else

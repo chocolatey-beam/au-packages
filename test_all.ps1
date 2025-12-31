@@ -2,6 +2,8 @@
 
 param( [string[]] $Name, [string] $Root = "$PSScriptRoot" )
 
+$InformationPreference = 'Continue'
+
 if (Test-Path $PSScriptRoot/update_vars.ps1) { . $PSScriptRoot/update_vars.ps1 }
 $global:au_root = Resolve-Path $Root
 
@@ -11,13 +13,13 @@ if (($Name.Length -gt 0) -and ($Name[0] -match '^random (.+)'))
 
     $group = [int]$Matches[1]
     $n = (Get-Random -Maximum $group)
-    Write-Host "TESTING GROUP $($n+1) of $group"
+    Write-Information "TESTING GROUP $($n+1) of $group"
 
     $group_size = [int]($lsau.Count / $group) + 1
     $Name = $lsau | Select-Object -First $group_size -Skip ($group_size * $n) | ForEach-Object { $_.Name }
 
-    Write-Host ($Name -join ' ')
-    Write-Host ('-' * 80)
+    Write-Information ($Name -join ' ')
+    Write-Information ('-' * 80)
 }
 
 $options = [ordered]@{
