@@ -20,21 +20,8 @@ jobs:
         run: Install-Module -Name AU -Force -Scope CurrentUser
       - shell: pwsh
         run: ${{ github.workspace }}\_elixir-gen\generate-packages.ps1
-      - shell: pwsh
+      - name: update_all.ps1
+        shell: pwsh
         run: |
           $PSNativeCommandArgumentPassing = 'Legacy'
           & ${{ github.workspace }}\update_all.ps1
-      - if: always()
-        shell: pwsh
-        run: |
-          Write-Host "=== Generated Packages ==="
-          Get-ChildItem elixir* -Directory | ForEach-Object { Write-Host $_.Name }
-          Write-Host ""
-          Write-Host "=== Nuspec Versions ==="
-          Get-ChildItem elixir*\*.nuspec | ForEach-Object {
-            $version = Select-String -Path $_ -Pattern "<version>(.*)</version>" | ForEach-Object { $_.Matches.Groups[1].Value }
-            Write-Host "$($_.Directory.Name): $version"
-          }
-          Write-Host ""
-          Write-Host "=== Nupkg Files ==="
-          Get-ChildItem elixir*\*.nupkg -ErrorAction SilentlyContinue | ForEach-Object { Write-Host $_.FullName }
