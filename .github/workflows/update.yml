@@ -10,7 +10,6 @@ jobs:
     runs-on: windows-latest
     env:
       au_Push: 'true'
-      au_ForcePush: 'false'
       GH_TOKEN: ${{ github.token }}
       github_api_key: ${{ secrets.API_KEY }}
       api_key: ${{ secrets.CHOCOLATEY_API_KEY }}
@@ -22,7 +21,9 @@ jobs:
       - shell: pwsh
         run: ${{ github.workspace }}\_elixir-gen\generate-packages.ps1
       - shell: pwsh
-        run: ${{ github.workspace }}\update_all.ps1
+        run: |
+          $PSNativeCommandArgumentPassing = 'Legacy'
+          & ${{ github.workspace }}\update_all.ps1
       - if: always()
         shell: pwsh
         run: |
