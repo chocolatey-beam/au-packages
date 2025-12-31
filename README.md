@@ -2,6 +2,7 @@
 
 [![update-au-packages](https://github.com/chocolatey-beam/au-packages/actions/workflows/update.yml/badge.svg)](https://github.com/chocolatey-beam/au-packages/actions/workflows/update.yml)
 [![validate-powershell-scripts](https://github.com/chocolatey-beam/au-packages/actions/workflows/validate.yml/badge.svg)](https://github.com/chocolatey-beam/au-packages/actions/workflows/validate.yml)
+[![Update status](https://img.shields.io/badge/Update-Status-blue)](https://gist.github.com/lukebakken/7c671e5b6c0431b43e29fe2446e212c4)
 
 This repository contains Chocolatey packages managed with the [AU (Automatic Updater)](https://github.com/majkinetor/au) framework.
 
