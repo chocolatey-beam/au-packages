@@ -24,14 +24,8 @@ if (-not (Test-Path -LiteralPath $zipFile))
 
 Write-Information "Installing Elixir $version for OTP $otpMajorVersion..."
 
-$packageArgs = @{
-    PackageName = $packageName
-    FileType = 'zip'
-    File64 = $zipFile
-    UnzipLocation = $toolsDir
-}
-
-Install-ChocolateyZipPackage @packageArgs
+# Extract the embedded zip file
+Get-ChocolateyUnzip -FileFullPath $zipFile -Destination $toolsDir
 
 # Remove the zip file after extraction
 Remove-Item -LiteralPath $zipFile -Force -ErrorAction SilentlyContinue
