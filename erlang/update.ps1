@@ -1,9 +1,9 @@
-. (Join-Path -Path $PSScriptRoot -ChildPath '..' | Join-Path -ChildPath 'Shared.ps1')
-Import-AUModule
-
 param(
     [string]$Version
 )
+
+. (Join-Path -Path $PSScriptRoot -ChildPath '..' | Join-Path -ChildPath 'Shared.ps1')
+Import-AUModule
 
 $InformationPreference = 'Continue'
 
