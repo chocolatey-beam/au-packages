@@ -266,6 +266,18 @@ foreach ($version in $missingVersions)
         {
             throw "Update failed for version $version"
         }
+
+        # Push the package if not dry run
+        if (-not $DryRun)
+        {
+            # Push-Package calls choco push which sets $LASTEXITCODE
+            # The function doesn't throw on error, so we check exit code
+            Push-Package
+            if ($LASTEXITCODE -ne 0)
+            {
+                throw "Push failed for version $version"
+            }
+        }
     }
     finally
     {
