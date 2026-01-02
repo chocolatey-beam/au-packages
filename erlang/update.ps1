@@ -1,6 +1,10 @@
 . (Join-Path -Path $PSScriptRoot -ChildPath '..' | Join-Path -ChildPath 'Shared.ps1')
 Import-AUModule
 
+param(
+    [string]$Version
+)
+
 $InformationPreference = 'Continue'
 
 function global:au_SearchReplace
@@ -29,8 +33,19 @@ Copy-TemplateFile
 
 function global:au_GetLatest
 {
-    # Check if a specific version is requested
-    $targetVersion = if (Get-Variable -Name au_Version -Scope Global -ErrorAction Ignore) { $global:au_Version } else { 'latest' }
+    # Check for version in order of precedence: parameter, global variable, latest
+    $targetVersion = if ($Version)
+    {
+        $Version
+    }
+    elseif (Get-Variable -Name au_Version -Scope Global -ErrorAction Ignore)
+    {
+        $global:au_Version
+    }
+    else
+    {
+        'latest'
+    }
 
     # Get release from GitHub using gh CLI with assets
     if ($targetVersion -eq 'latest')
