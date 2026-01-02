@@ -50,6 +50,21 @@ param(
     [int]$MaxPushes = 10
 )
 
+# Clean up any stale AU functions from previous package runs
+Remove-Item Function:\au_SearchReplace -ErrorAction Ignore
+Remove-Item Function:\au_BeforeUpdate -ErrorAction Ignore
+Remove-Item Function:\au_AfterUpdate -ErrorAction Ignore
+Remove-Item Function:\au_GetLatest -ErrorAction Ignore
+
+# Clean up AU global variables
+Remove-Variable -Name au_Version -Scope Global -ErrorAction Ignore
+Remove-Variable -Name au_Force -Scope Global -ErrorAction Ignore
+Remove-Variable -Name Latest -Scope Global -ErrorAction Ignore
+
+# Clean up AU environment variables
+Remove-Item Env:\au_Push -ErrorAction Ignore
+Remove-Item Env:\api_key -ErrorAction Ignore
+
 $InformationPreference = 'Continue'
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 'Latest'
@@ -265,8 +280,8 @@ foreach ($version in $missingVersions)
     Write-Information "  SUCCESS: Version $version completed successfully"
 }
 
-# Update state file with newly pushed versions
-if ($newlyPushed.Count -gt 0)
+# Update state file with newly pushed versions (only if not dry run)
+if (-not $DryRun -and $newlyPushed.Count -gt 0)
 {
     $allPushed = @($pushedVersions) + @($newlyPushed)
     $state = @{
