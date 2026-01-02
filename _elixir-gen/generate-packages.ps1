@@ -10,7 +10,7 @@ Parses otp_versions.table to determine the latest OTP version, then creates
 packages for OTP N, N-1, and N-2.
 #>
 
-. (Join-Path -Path $PSScriptRoot -ChildPath '..' -AdditionalChildPath 'Shared.ps1')
+. (Join-Path -Path $PSScriptRoot -ChildPath '..' | Join-Path -ChildPath 'Shared.ps1')
 Import-AUModule
 
 $InformationPreference = 'Continue'

@@ -10,8 +10,20 @@ Runs PSScriptAnalyzer on all PowerShell scripts to ensure they follow
 best practices and maintain consistent formatting.
 #>
 
+$InformationPreference = 'Continue'
+$ErrorActionPreference = 'Stop'
+
 $repoRoot = $PSScriptRoot
+if (-not $repoRoot)
+{
+    throw "PSScriptRoot is not set. This script must be run directly, not dot-sourced."
+}
+
 $settingsPath = Join-Path -Path $repoRoot -ChildPath 'PSScriptAnalyzerSettings.psd1'
+if (-not (Test-Path $settingsPath))
+{
+    throw "PSScriptAnalyzer settings not found at: $settingsPath"
+}
 
 # Find all PowerShell scripts
 $filesToCheck = Get-ChildItem -Path $repoRoot -Recurse -Include *.ps1, *.psm1 | Where-Object {

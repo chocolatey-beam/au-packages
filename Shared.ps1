@@ -35,8 +35,10 @@ function Import-AUModule
             throw "Could not find repository root (no .git directory found)"
         }
 
-        $auModulePath = Join-Path -Path $current -ChildPath '_modules' `
-            -AdditionalChildPath @('au', 'src', 'Chocolatey-AU.psd1')
+        $auModulePath = Join-Path -Path $current -ChildPath '_modules'
+        $auModulePath = Join-Path -Path $auModulePath -ChildPath 'au'
+        $auModulePath = Join-Path -Path $auModulePath -ChildPath 'src'
+        $auModulePath = Join-Path -Path $auModulePath -ChildPath 'Chocolatey-AU.psd1'
         if (-not (Test-Path $auModulePath))
         {
             throw "AU module not found at $auModulePath. Run 'git submodule update --init' first."
