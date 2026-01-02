@@ -11,7 +11,7 @@ $InformationPreference = 'Continue'
 
 $packageName = 'rebar3'
 
-$toolsDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$toolsDir = Split-Path -LiteralPath $MyInvocation.MyCommand.Definition -Parent
 $rebar3Cmd = Join-Path -Path $toolsDir -ChildPath 'rebar3.cmd'
 
 Write-Information "Uninstalling rebar3..."
