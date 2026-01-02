@@ -25,18 +25,7 @@ function global:au_SearchReplace
 }
 
 # Copy template files to working files before AU processes them
-$nuspecTemplate = Join-Path $PSScriptRoot 'erlang.nuspec.in'
-$nuspecFile = Join-Path $PSScriptRoot 'erlang.nuspec'
-Copy-Item -Force $nuspecTemplate $nuspecFile
-
-$toolsDir = Join-Path $PSScriptRoot 'tools'
-$installTemplate = Join-Path $toolsDir 'chocolateyInstall.ps1.in'
-$installFile = Join-Path $toolsDir 'chocolateyInstall.ps1'
-Copy-Item -Force $installTemplate $installFile
-
-$uninstallTemplate = Join-Path $toolsDir 'chocolateyUninstall.ps1.in'
-$uninstallFile = Join-Path $toolsDir 'chocolateyUninstall.ps1'
-Copy-Item -Force $uninstallTemplate $uninstallFile
+Copy-TemplateFiles
 
 function global:au_GetLatest
 {

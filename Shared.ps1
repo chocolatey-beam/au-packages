@@ -46,3 +46,32 @@ function Import-AUModule
         Import-Module -Force $auModulePath
     }
 }
+
+function Copy-TemplateFiles
+{
+    <#
+    .SYNOPSIS
+    Copies all .in template files to their working file equivalents
+
+    .DESCRIPTION
+    Recursively finds all files with .in suffix in the current directory
+    and copies them to files without the .in suffix. This allows keeping
+    clean templates in source control while generating working files.
+
+    .EXAMPLE
+    Copy-TemplateFiles
+    Copies all *.in files in current directory and subdirectories
+
+    .NOTES
+    - erlang.nuspec.in → erlang.nuspec
+    - tools/chocolateyInstall.ps1.in → tools/chocolateyInstall.ps1
+    - Working files should be gitignored
+    #>
+    $templateFiles = Get-ChildItem -Path $PSScriptRoot -Recurse -Filter '*.in'
+
+    foreach ($template in $templateFiles)
+    {
+        $targetPath = $template.FullName -replace '\.in$', ''
+        Copy-Item -Force $template.FullName $targetPath
+    }
+}
