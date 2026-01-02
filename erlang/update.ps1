@@ -33,6 +33,10 @@ Copy-TemplateFile
 
 function global:au_GetLatest
 {
+    # Start-ThreadJob requires PowerShell 7+, which is what we use
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseCompatibleCommands', '', Justification = 'Start-ThreadJob is available in PowerShell 7+ which is our target')]
+    param()
+
     # Check for version in order of precedence: parameter, global variable, latest
     $targetVersion = if ($Version)
     {
