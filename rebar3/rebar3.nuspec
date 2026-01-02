@@ -3,7 +3,7 @@
   <metadata>
     <id>rebar3</id>
     <title>Rebar3</title>
-    <version>3.25.1.20251231</version>
+    <version>0.0.0</version>
     <authors>Fred Hebert, Tristan Sloughter</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
     <summary>Erlang build tool</summary>
@@ -47,7 +47,7 @@ Full documentation available at [rebar3.org/docs](https://rebar3.org/docs)
     <projectUrl>http://www.rebar3.org/</projectUrl>
     <projectSourceUrl>https://github.com/erlang/rebar3</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey-beam/au-packages</packageSourceUrl>
-    <releaseNotes>https://github.com/erlang/rebar3/releases/tag/3.25.1</releaseNotes>
+    <releaseNotes>https://github.com/erlang/rebar3/releases</releaseNotes>
     <tags>erlang build tools</tags>
     <copyright>Copyright (c) 2009 Dave Smith</copyright>
     <licenseUrl>https://github.com/erlang/rebar3/blob/main/LICENSE</licenseUrl>

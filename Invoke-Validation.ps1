@@ -10,7 +10,7 @@ Runs PSScriptAnalyzer on all PowerShell scripts to ensure they follow
 best practices and maintain consistent formatting.
 #>
 
-$repoRoot = Split-Path -Parent $PSCommandPath
+$repoRoot = $PSScriptRoot
 $settingsPath = Join-Path -Path $repoRoot -ChildPath 'PSScriptAnalyzerSettings.psd1'
 
 # Find all PowerShell scripts

@@ -4,9 +4,9 @@ in verifying that this package's contents are trustworthy.
 
 The embedded rebar3 binary is obtained from the official GitHub releases:
 
-Version : 3.25.1.20251231
+Version : 0.0.0
 URL     : https://github.com/erlang/rebar3/releases/download/3.25.1/rebar3
-Checksum: 924576737F0D3098E1FA4691E6F542BF61036D234C61EBDC18AAFEF8E2BCCF67
+Checksum: 0000000000000000000000000000000000000000000000000000000000000000
 
 The checksum can be verified by running:
   Get-FileHash -Path rebar3 -Algorithm SHA256
