@@ -1,3 +1,4 @@
+sync-state.json
 *.nupkg
 update_vars.ps1
 Update-AUPackages.md

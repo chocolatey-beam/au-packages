@@ -24,13 +24,38 @@ function global:au_SearchReplace
     }
 }
 
+# Copy template files to working files before AU processes them
+$nuspecTemplate = Join-Path $PSScriptRoot 'erlang.nuspec.in'
+$nuspecFile = Join-Path $PSScriptRoot 'erlang.nuspec'
+Copy-Item -Force $nuspecTemplate $nuspecFile
+
+$toolsDir = Join-Path $PSScriptRoot 'tools'
+$installTemplate = Join-Path $toolsDir 'chocolateyInstall.ps1.in'
+$installFile = Join-Path $toolsDir 'chocolateyInstall.ps1'
+Copy-Item -Force $installTemplate $installFile
+
+$uninstallTemplate = Join-Path $toolsDir 'chocolateyUninstall.ps1.in'
+$uninstallFile = Join-Path $toolsDir 'chocolateyUninstall.ps1'
+Copy-Item -Force $uninstallTemplate $uninstallFile
+
 function global:au_GetLatest
 {
-    # Get latest release from GitHub using gh CLI with assets
-    $releaseJson = & gh.exe release view --repo erlang/otp --json 'tagName,url,assets'
+    # Check if a specific version is requested
+    $targetVersion = if (Get-Variable -Name au_Version -Scope Global -ErrorAction Ignore) { $global:au_Version } else { 'latest' }
+
+    # Get release from GitHub using gh CLI with assets
+    if ($targetVersion -eq 'latest')
+    {
+        $releaseJson = & gh.exe release view --repo erlang/otp --json 'tagName,url,assets'
+    }
+    else
+    {
+        $releaseJson = & gh.exe release view --repo erlang/otp "OTP-$targetVersion" --json 'tagName,url,assets'
+    }
+
     if ($LASTEXITCODE -ne 0)
     {
-        throw "Failed to get latest release from GitHub"
+        throw "Failed to get release from GitHub"
     }
 
     $release = $releaseJson | ConvertFrom-Json
