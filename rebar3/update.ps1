@@ -22,6 +22,9 @@ function global:au_SearchReplace
     }
 }
 
+# Copy template files to working files before AU processes them
+Copy-TemplateFiles
+
 function global:au_BeforeUpdate
 {
     Get-RemoteFiles -Purge -NoSuffix
