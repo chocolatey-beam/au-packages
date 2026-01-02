@@ -50,6 +50,8 @@ param(
     [int]$MaxPushes = 10
 )
 
+. (Join-Path -Path $PSScriptRoot -ChildPath 'Shared.ps1')
+
 # Clean up any stale AU functions from previous package runs
 Remove-Item Function:\au_SearchReplace -ErrorAction Ignore
 Remove-Item Function:\au_BeforeUpdate -ErrorAction Ignore
@@ -113,10 +115,9 @@ if (Test-Path $stateFile)
     Write-Information "Loaded state: $($pushedVersions.Count) versions previously pushed"
 }
 
-# Fetch otp_versions.table
-Write-Information "Fetching otp_versions.table from GitHub..."
-$otpVersionsUrl = 'https://raw.githubusercontent.com/erlang/otp/refs/heads/master/otp_versions.table'
-$otpVersionsContent = Invoke-WebRequest -Uri $otpVersionsUrl -UseBasicParsing | Select-Object -ExpandProperty Content
+# Load otp_versions.table (cached)
+Write-Information "Loading otp_versions.table..."
+$otpVersionsContent = Get-OtpVersionsTable
 
 # Parse OTP versions
 Write-Information "Parsing OTP versions..."

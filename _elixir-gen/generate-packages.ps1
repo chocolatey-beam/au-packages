@@ -16,9 +16,9 @@ Import-AUModule
 $InformationPreference = 'Continue'
 $ErrorActionPreference = 'Stop'
 
-# Get latest OTP major version from otp_versions.table
-Write-Information "Fetching otp_versions.table from GitHub..."
-$otpVersionsContent = & gh.exe api --header 'Accept: application/vnd.github.v3.raw' 'repos/erlang/otp/contents/otp_versions.table'
+# Get latest OTP major version from otp_versions.table (cached)
+Write-Information "Loading otp_versions.table..."
+$otpVersionsContent = Get-OtpVersionsTable
 
 # Parse first line to get latest OTP major version
 $firstLine = ($otpVersionsContent -split "`n")[0]

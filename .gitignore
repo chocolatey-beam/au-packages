@@ -10,3 +10,7 @@ api_key
 # Generated elixir packages
 elixir/
 elixir-otp-*/
+
+# OTP versions table cache
+otp_versions.table
+otp_versions.table.sha256

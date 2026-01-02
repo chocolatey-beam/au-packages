@@ -78,12 +78,8 @@ function global:au_GetLatest
         throw "Could not find Windows installers in release assets"
     }
 
-    # Get ERTS version from otp_versions.table
-    $otpVersionsContent = & gh.exe api --header 'Accept: application/vnd.github.v3.raw' 'repos/erlang/otp/contents/otp_versions.table'
-    if ($LASTEXITCODE -ne 0)
-    {
-        throw "Failed to fetch otp_versions.table"
-    }
+    # Get ERTS version from otp_versions.table (cached)
+    $otpVersionsContent = Get-OtpVersionsTable
 
     # Find the line for this OTP version and extract ERTS version
     $otpLine = ($otpVersionsContent -split "`n") | Where-Object { $_ -match "^OTP-$version\s*:" } | Select-Object -First 1

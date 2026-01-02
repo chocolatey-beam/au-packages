@@ -8,6 +8,31 @@ Shared utility functions for AU package scripts
 Common functions used across package update scripts to avoid duplication.
 #>
 
+function Get-RepositoryRoot
+{
+    <#
+    .SYNOPSIS
+    Finds the repository root by searching for .git directory
+
+    .DESCRIPTION
+    Walks up the directory tree from the calling script's location
+    until it finds a .git directory, indicating the repository root.
+
+    .EXAMPLE
+    $repoRoot = Get-RepositoryRoot
+    #>
+    $current = $PSScriptRoot
+    while ($current -and -not (Test-Path -PathType Container -LiteralPath (Join-Path $current '.git')))
+    {
+        $current = Split-Path -LiteralPath $current -Parent
+    }
+    if (-not $current)
+    {
+        throw "Could not find repository root (no .git directory found)"
+    }
+    return $current
+}
+
 function Import-AUModule
 {
     <#
@@ -24,18 +49,9 @@ function Import-AUModule
     #>
     if (-not (Get-Module -Name Chocolatey-AU -ListAvailable))
     {
-        # Find repository root by looking for .git directory
-        $current = $PSScriptRoot
-        while ($current -and -not (Test-Path -PathType Container -LiteralPath (Join-Path $current '.git')))
-        {
-            $current = Split-Path -LiteralPath $current -Parent
-        }
-        if (-not $current)
-        {
-            throw "Could not find repository root (no .git directory found)"
-        }
+        $repoRoot = Get-RepositoryRoot
 
-        $auModulePath = Join-Path -Path $current -ChildPath '_modules'
+        $auModulePath = Join-Path -Path $repoRoot -ChildPath '_modules'
         $auModulePath = Join-Path -Path $auModulePath -ChildPath 'au'
         $auModulePath = Join-Path -Path $auModulePath -ChildPath 'src'
         $auModulePath = Join-Path -Path $auModulePath -ChildPath 'Chocolatey-AU.psd1'
@@ -74,4 +90,79 @@ function Copy-TemplateFile
         $targetPath = $template.FullName -replace '\.in$', ''
         Copy-Item -Force $template.FullName $targetPath
     }
+}
+
+function Get-OtpVersionsTable
+{
+    <#
+    .SYNOPSIS
+    Gets the OTP versions table with caching and checksum validation
+
+    .DESCRIPTION
+    Downloads otp_versions.table from Erlang/OTP repository with local
+    caching. Validates cached file with checksum and age (24 hours).
+    Re-downloads if cache is missing, stale, or checksum mismatch.
+
+    .EXAMPLE
+    $content = Get-OtpVersionsTable
+    Returns the content of otp_versions.table
+
+    .NOTES
+    Cache location: Repository root
+    Cache files: otp_versions.table, otp_versions.table.sha256
+    Max age: 24 hours
+    #>
+
+    $repoRoot = Get-RepositoryRoot
+
+    $cacheFile = Join-Path $repoRoot 'otp_versions.table'
+    $checksumFile = Join-Path $repoRoot 'otp_versions.table.sha256'
+    $maxAgeHours = 24
+
+    $needsDownload = $false
+
+    # Check if cache exists and is fresh
+    if (Test-Path $cacheFile)
+    {
+        $fileAge = (Get-Date) - (Get-Item $cacheFile).LastWriteTime
+        if ($fileAge.TotalHours -gt $maxAgeHours)
+        {
+            $needsDownload = $true
+        }
+        elseif (Test-Path $checksumFile)
+        {
+            # Validate checksum
+            $cachedChecksum = Get-Content $checksumFile
+            $currentChecksum = (Get-FileHash -Path $cacheFile -Algorithm SHA256).Hash.ToLowerInvariant()
+            if ($cachedChecksum -ne $currentChecksum)
+            {
+                $needsDownload = $true
+            }
+        }
+        else
+        {
+            # No checksum file, re-download to be safe
+            $needsDownload = $true
+        }
+    }
+    else
+    {
+        $needsDownload = $true
+    }
+
+    if ($needsDownload)
+    {
+        # Download fresh copy
+        $url = 'https://raw.githubusercontent.com/erlang/otp/refs/heads/master/otp_versions.table'
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $url -OutFile $cacheFile
+        $ProgressPreference = 'Continue'
+
+        # Calculate and save checksum
+        $checksum = (Get-FileHash -Path $cacheFile -Algorithm SHA256).Hash.ToLowerInvariant()
+        Set-Content -Path $checksumFile -Value $checksum
+    }
+
+    # Return content
+    return Get-Content -Path $cacheFile -Raw
 }
