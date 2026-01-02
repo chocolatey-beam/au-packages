@@ -15,7 +15,7 @@ $settingsPath = Join-Path -Path $repoRoot -ChildPath 'PSScriptAnalyzerSettings.p
 
 # Find all PowerShell scripts
 $filesToCheck = Get-ChildItem -Path $repoRoot -Recurse -Include *.ps1, *.psm1 | Where-Object {
-    $_.FullName -notmatch '\\(node_modules|\.git)\\'
+    $_.FullName -notmatch '\\(node_modules|\.git|_modules)\\'
 }
 
 $allPassed = $true

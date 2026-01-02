@@ -1,4 +1,4 @@
-. (Join-Path $PSScriptRoot '..' 'Shared.ps1')
+. (Join-Path -Path $PSScriptRoot -ChildPath '..' -AdditionalChildPath 'Shared.ps1')
 Import-AUModule
 
 $InformationPreference = 'Continue'
