@@ -1,4 +1,5 @@
-Import-Module AU
+. (Join-Path $PSScriptRoot '..' 'Shared.ps1')
+Import-AUModule
 
 $InformationPreference = 'Continue'
 

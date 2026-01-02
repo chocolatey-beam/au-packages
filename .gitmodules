@@ -1,0 +1,5 @@
+[submodule "_modules/au"]
+	path = _modules/au
+	url = https://github.com/chocolatey-beam/cc-chocolatey-au.git
+	branch = fix/powershell-7-compatibility
+    ignore = untracked

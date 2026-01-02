@@ -16,12 +16,12 @@ jobs:
       gist_id: 7c671e5b6c0431b43e29fe2446e212c4
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          submodules: true
       - shell: pwsh
-        run: Install-Module -Name AU -Force -Scope CurrentUser
+        run: Import-Module ${{ github.workspace }}\_modules\au\src\Chocolatey-AU.psd1 -Force
       - shell: pwsh
         run: ${{ github.workspace }}\_elixir-gen\generate-packages.ps1
       - name: update_all.ps1
         shell: pwsh
-        run: |
-          $PSNativeCommandArgumentPassing = 'Legacy'
-          & ${{ github.workspace }}\update_all.ps1
+        run: ${{ github.workspace }}\update_all.ps1

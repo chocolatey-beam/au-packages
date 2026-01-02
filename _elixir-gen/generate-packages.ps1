@@ -10,7 +10,8 @@ Parses otp_versions.table to determine the latest OTP version, then creates
 packages for OTP N, N-1, and N-2.
 #>
 
-Import-Module AU
+. (Join-Path $PSScriptRoot '..' 'Shared.ps1')
+Import-AUModule
 
 $InformationPreference = 'Continue'
 $ErrorActionPreference = 'Stop'
