@@ -74,10 +74,6 @@ function global:au_GetLatest
         throw "Could not find Windows installers in release assets"
     }
 
-    # Extract checksums from digest field (format: "sha256:hash")
-    $checksum32 = ($win32Asset.digest -split ':')[1]
-    $checksum64 = ($win64Asset.digest -split ':')[1]
-
     # Get ERTS version from otp_versions.table
     $otpVersionsContent = & gh.exe api --header 'Accept: application/vnd.github.v3.raw' 'repos/erlang/otp/contents/otp_versions.table'
     if ($LASTEXITCODE -ne 0)
@@ -101,6 +97,47 @@ function global:au_GetLatest
         throw "Could not extract ERTS version from otp_versions.table"
     }
 
+    $checksum32 = $null
+    $checksum64 = $null
+
+    if ($win32Asset.digest -and $win64Asset.digest)
+    {
+        # Extract checksums from digest field (format: "sha256:hash")
+        $checksum32 = ($win32Asset.digest -split ':')[1]
+        $checksum64 = ($win64Asset.digest -split ':')[1]
+    }
+    else
+    {
+        # Download installers to calculate checksums for older releases
+        $win32Url = $win32Asset.url
+        $win64Url = $win64Asset.url
+        $win32File = Join-Path $PSScriptRoot "otp_win32_$version.exe"
+        $win64File = Join-Path $PSScriptRoot "otp_win64_$version.exe"
+
+        $jobs = @()
+        $ProgressPreference = 'SilentlyContinue'
+
+        # Download 32-bit installer
+        $jobs += Start-ThreadJob -ScriptBlock {
+            Invoke-WebRequest -Uri $using:win32Url -OutFile $using:win32File
+        }
+
+        # Download 64-bit installer
+        $jobs += Start-ThreadJob -ScriptBlock {
+            Invoke-WebRequest -Uri $using:win64Url -OutFile $using:win64File
+        }
+
+        Wait-Job -Job $jobs | Out-Null
+        $ProgressPreference = 'Continue'
+
+        # Calculate checksums
+        $checksum32 = (Get-FileHash -Path $win32File -Algorithm SHA256).Hash.ToLowerInvariant()
+        $checksum64 = (Get-FileHash -Path $win64File -Algorithm SHA256).Hash.ToLowerInvariant()
+
+        # Clean up downloaded files
+        Remove-Item $win32File, $win64File -Force
+    }
+
     return @{
         Version = $version
         URL32 = $win32Asset.url
@@ -113,5 +150,8 @@ function global:au_GetLatest
         ErtsVersion = $ertsVersion
     }
 }
+
+# Copy template files to working files before AU processes them
+Copy-TemplateFile
 
 Update-Package -ChecksumFor none
