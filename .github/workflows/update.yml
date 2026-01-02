@@ -19,8 +19,6 @@ jobs:
         with:
           submodules: true
       - shell: pwsh
-        run: Import-Module ${{ github.workspace }}\_modules\au\src\Chocolatey-AU.psd1 -Force
-      - shell: pwsh
         run: ${{ github.workspace }}\_elixir-gen\generate-packages.ps1
       - name: update_all.ps1
         shell: pwsh

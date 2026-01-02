@@ -2,6 +2,9 @@
 
 param([string[]] $Name, [string] $ForcedPackages, [string] $Root = $PSScriptRoot)
 
+. (Join-Path -Path $PSScriptRoot -ChildPath 'Shared.ps1')
+Import-AUModule
+
 $InformationPreference = 'Continue'
 
 if (Test-Path $PSScriptRoot/update_vars.ps1) { . $PSScriptRoot/update_vars.ps1 }
