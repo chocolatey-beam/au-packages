@@ -47,7 +47,7 @@ function Import-AUModule
     }
 }
 
-function Copy-TemplateFiles
+function Copy-TemplateFile
 {
     <#
     .SYNOPSIS
@@ -59,12 +59,12 @@ function Copy-TemplateFiles
     clean templates in source control while generating working files.
 
     .EXAMPLE
-    Copy-TemplateFiles
+    Copy-TemplateFile
     Copies all *.in files in current directory and subdirectories
 
     .NOTES
-    - erlang.nuspec.in → erlang.nuspec
-    - tools/chocolateyInstall.ps1.in → tools/chocolateyInstall.ps1
+    - erlang.nuspec.in -> erlang.nuspec
+    - tools/chocolateyInstall.ps1.in -> tools/chocolateyInstall.ps1
     - Working files should be gitignored
     #>
     $templateFiles = Get-ChildItem -Path $PSScriptRoot -Recurse -Filter '*.in'

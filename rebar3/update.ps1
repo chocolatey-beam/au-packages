@@ -23,7 +23,7 @@ function global:au_SearchReplace
 }
 
 # Copy template files to working files before AU processes them
-Copy-TemplateFiles
+Copy-TemplateFile
 
 function global:au_BeforeUpdate
 {
