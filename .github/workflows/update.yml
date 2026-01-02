@@ -2,7 +2,7 @@ name: update-au-packages
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 5 * * 0'  # Weekly on Sunday at 5:30 AM UTC
+    - cron: '30 5 * * *'  # Daily at 5:30 AM UTC
 permissions:
   contents: write
 jobs:
