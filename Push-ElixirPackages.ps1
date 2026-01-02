@@ -25,4 +25,4 @@ Write-Information "Forcing update and push of Elixir packages..."
 Write-Information "Using au_ForcePush='true' to add --force flag and avoid empty string bug"
 
 # Force update specific packages
-& "$PSScriptRoot\update_all.ps1" -ForcedPackages 'elixir elixir-otp-26 elixir-otp-27 elixir-otp-28'
+& "$PSScriptRoot\Update-Packages.ps1" -ForcedPackages 'elixir elixir-otp-26 elixir-otp-27 elixir-otp-28'

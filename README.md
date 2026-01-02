@@ -46,7 +46,7 @@ To check all packages for updates:
 ```powershell
 $au_WhatIf = $false
 $au_Push = $false
-.\update_all.ps1
+.\Update-Packages.ps1
 ```
 
 ### Creating a New Package
@@ -134,7 +134,7 @@ For GitHub Actions, set secrets:
 Run PSScriptAnalyzer on all scripts:
 
 ```powershell
-.\Test-All.ps1
+.\Invoke-Validation.ps1
 ```
 
 All scripts must pass validation before committing.

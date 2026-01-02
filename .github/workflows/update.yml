@@ -20,6 +20,6 @@ jobs:
           submodules: true
       - shell: pwsh
         run: ${{ github.workspace }}\_elixir-gen\generate-packages.ps1
-      - name: update_all.ps1
+      - name: Update-Packages.ps1
         shell: pwsh
-        run: ${{ github.workspace }}\update_all.ps1
+        run: ${{ github.workspace }}\Update-Packages.ps1
