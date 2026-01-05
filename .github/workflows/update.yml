@@ -19,6 +19,9 @@ jobs:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           submodules: true
+      - name: check-otp-version
+        shell: pwsh
+        run: ${{ github.workspace }}\Test-LatestOtpVersion.ps1
       - name: Update-Packages.ps1
         shell: pwsh
         run: ${{ github.workspace }}\Update-Packages.ps1

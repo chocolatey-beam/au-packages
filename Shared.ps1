@@ -167,6 +167,38 @@ function Get-OtpVersionsTable
     return Get-Content -Path $cacheFile -Raw
 }
 
+function Test-LatestOtpVersion
+{
+    <#
+    .SYNOPSIS
+    Verifies the tracked OTP version matches the latest from otp_versions.table
+
+    .DESCRIPTION
+    Compares the OTP version in .latest_otp_version file against the
+    latest version in otp_versions.table. Throws error if they don't match,
+    indicating Elixir packages need regeneration.
+
+    .EXAMPLE
+    Test-LatestOtpVersion
+    #>
+    $repoRoot = Get-RepositoryRoot
+    $trackedFile = Join-Path $repoRoot '.latest_otp_version'
+
+    if (-not (Test-Path $trackedFile))
+    {
+        throw "Tracking file not found: $trackedFile"
+    }
+
+    $trackedOtp = Get-Content $trackedFile
+    $otpContent = Get-OtpVersionsTable
+    $latestOtp = ($otpContent -split "`n")[0] -replace '^OTP-(\d+).*', '$1'
+
+    if ($latestOtp -ne $trackedOtp)
+    {
+        throw "OTP version changed from $trackedOtp to $latestOtp! Regenerate Elixir packages with generate-packages.ps1 and update .latest_otp_version"
+    }
+}
+
 function ConvertTo-ChocolateyVersion
 {
     <#
