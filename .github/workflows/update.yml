@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '30 5 * * *'  # Daily at 5:30 AM UTC
 permissions:
-  contents: write
+  contents: read
 jobs:
   update:
     runs-on: windows-latest
