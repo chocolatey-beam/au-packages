@@ -3,11 +3,14 @@ Import-AUModule
 
 $InformationPreference = 'Continue'
 
+$otpMajorVersion = 28
+
 function global:au_SearchReplace
 {
     @{
         ".\tools\chocolateyInstall.ps1" = @{
             "(?i)(^\s*[$]version\s*=\s*)('.*')" = "`$1'$($Latest.Version)'"
+            "(?i)(^\s*[$]otpMajorVersion\s*=\s*)('.*')" = "`$1'$otpMajorVersion'"
         }
 
         ".\tools\VERIFICATION.txt" = @{
@@ -26,29 +29,29 @@ function global:au_BeforeUpdate
 {
     Get-RemoteFiles -Purge -NoSuffix
 
-    # Rename from rebar3.escript to rebar3 (no extension) for wrapper scripts
-    $source = Join-Path -Path 'tools' -ChildPath 'rebar3.escript'
-    $dest = Join-Path -Path 'tools' -ChildPath 'rebar3'
+    # Rename from elixir-otp-N.zip to elixir.zip for simpler install script
+    $source = Join-Path -Path 'tools' -ChildPath "elixir-otp-$otpMajorVersion.zip"
+    $dest = Join-Path -Path 'tools' -ChildPath 'elixir.zip'
     Move-Item -LiteralPath $source -Destination $dest -Force
 }
 
 function global:au_GetLatest
 {
     # Get latest release info from GitHub
-    $tag = & gh.exe release view --repo erlang/rebar3 --json tagName --jq .tagName
+    $tag = & gh.exe release view --repo elixir-lang/elixir --json tagName --jq .tagName
     if ($LASTEXITCODE -ne 0)
     {
         throw "Failed to get latest release from GitHub"
     }
 
-    $version = $tag
-    $url = "https://github.com/erlang/rebar3/releases/download/$tag/rebar3"
+    $version = $tag -replace '^v', ''
+    $url = "https://github.com/elixir-lang/elixir/releases/download/$tag/elixir-otp-$otpMajorVersion.zip"
 
     return @{
         Version = $version
         URL64 = $url
-        FileType = 'escript'
-        ReleaseNotes = "https://github.com/erlang/rebar3/releases/tag/$tag"
+        FileType = 'zip'
+        ReleaseNotes = "https://github.com/elixir-lang/elixir/releases/tag/$tag"
     }
 }
 

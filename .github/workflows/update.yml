@@ -12,14 +12,13 @@ jobs:
       au_Push: 'true'
       GH_TOKEN: ${{ github.token }}
       github_api_key: ${{ secrets.API_KEY }}
+      github_user_repo: chocolatey-beam/au-packages
       api_key: ${{ secrets.CHOCOLATEY_API_KEY }}
       gist_id: 7c671e5b6c0431b43e29fe2446e212c4
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           submodules: true
-      - shell: pwsh
-        run: ${{ github.workspace }}\_elixir-gen\generate-packages.ps1
       - name: Update-Packages.ps1
         shell: pwsh
         run: ${{ github.workspace }}\Update-Packages.ps1

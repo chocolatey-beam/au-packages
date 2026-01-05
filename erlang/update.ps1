@@ -28,9 +28,6 @@ function global:au_SearchReplace
     }
 }
 
-# Copy template files to working files before AU processes them
-Copy-TemplateFile
-
 function global:au_GetLatest
 {
     # Start-ThreadJob requires PowerShell 7+, which is what we use
@@ -153,8 +150,5 @@ function global:au_GetLatest
         ErtsVersion = $ertsVersion
     }
 }
-
-# Copy template files to working files before AU processes them
-Copy-TemplateFile
 
 Update-Package -ChecksumFor none

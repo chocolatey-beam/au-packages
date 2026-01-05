@@ -1,5 +1,1 @@
-erlang.nuspec
 tools/*.exe
-tools/chocolateyInstall.ps1
-tools/chocolateyUnInstall.ps1
-tools/VERIFICATION.txt

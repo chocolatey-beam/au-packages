@@ -7,7 +7,7 @@ Author: Luke Bakken - luke@bakken.io
 #>
 
 $package = 'erlang'
-$ertsVersion = ''
+$ertsVersion = '16.2'
 
 $erlangProgramFilesPath = ((Get-ItemProperty -Path HKLM:\SOFTWARE\WOW6432Node\Ericsson\Erlang\$ertsVersion).'(default)')
 

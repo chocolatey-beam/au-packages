@@ -3,15 +3,30 @@
   <metadata>
     <id>erlang</id>
     <title>Erlang</title>
-    <version>0.0.0</version>
+    <version>28.3.0</version>
     <authors>Joe Armstrong,Robert Virding,Mike Williams</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
     <summary>Erlang/OTP - for building concurrent, distributed, and fault tolerant systems</summary>
-    <description>README INSERTED HERE</description>
+    <description><![CDATA[**OTP** is a set of Erlang libraries, which consists of the Erlang runtime system, a number of ready-to-use components mainly written in Erlang, and a set of design principles for Erlang programs.
+
+## Features
+
+* **Concurrency** - Lightweight processes with message passing
+* **Distribution** - Built-in support for distributed systems
+* **Fault Tolerance** - Supervision trees and hot code swapping
+* **Soft Real-Time** - Predictable low-latency response times
+* **High Availability** - Design for systems that never stop
+
+## Use Cases
+
+Erlang is used in telecoms, banking, e-commerce, instant messaging, and any system requiring high availability and scalability.
+
+Learn more at [erlang.org](https://www.erlang.org).
+]]></description>
     <projectUrl>http://www.erlang.org/</projectUrl>
     <projectSourceUrl>https://github.com/erlang/otp</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey-beam/au-packages</packageSourceUrl>
-    <releaseNotes>https://github.com/erlang/otp/releases</releaseNotes>
+    <releaseNotes>https://github.com/erlang/otp/releases/tag/OTP-28.3</releaseNotes>
     <tags>erlang languages</tags>
     <copyright>https://www.erlang.org/EPLICENSE</copyright>
     <licenseUrl>http://www.erlang.org/EPLICENSE</licenseUrl>
