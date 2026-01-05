@@ -3,7 +3,7 @@
   <metadata>
     <id>rebar3</id>
     <title>Rebar3</title>
-    <version>3.25.1</version>
+    <version>3.25.1.20260105</version>
     <authors>Fred Hebert, Tristan Sloughter</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
     <summary>Erlang build tool</summary>

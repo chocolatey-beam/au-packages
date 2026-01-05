@@ -10,7 +10,7 @@ $ErrorActionPreference = 'Stop'
 $InformationPreference = 'Continue'
 
 $packageName = 'rebar3'
-$version = '3.25.1'
+$version = '3.25.1.20260105'
 
 $toolsDir = Split-Path -LiteralPath $MyInvocation.MyCommand.Definition -Parent
 $rebar3File = Join-Path -Path $toolsDir -ChildPath 'rebar3'
