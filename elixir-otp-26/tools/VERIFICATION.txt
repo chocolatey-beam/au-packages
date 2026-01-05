@@ -4,7 +4,7 @@ in verifying that this package's contents are trustworthy.
 
 The embedded Elixir zip file is obtained from the official GitHub releases:
 
-Version : 1.19.4
+Version : 1.19.4.20260105
 URL     : https://github.com/elixir-lang/elixir/releases/download/v1.19.4/elixir-otp-26.zip
 Checksum: FE94681549A54C304C8F3BFCED70135458782DA1F89F29E936184CEFC07E19D4
 

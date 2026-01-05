@@ -3,7 +3,7 @@
   <metadata>
     <id>elixir-otp-26</id>
     <title>Elixir (OTP 26)</title>
-    <version>1.19.4</version>
+    <version>1.19.4.20260105</version>
     <authors>José Valim</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
     <summary>Elixir programming language</summary>
