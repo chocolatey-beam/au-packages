@@ -7,42 +7,23 @@
     <authors>Joe Armstrong,Robert Virding,Mike Williams</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
     <summary>Erlang/OTP - for building concurrent, distributed, and fault tolerant systems</summary>
-    <description><![CDATA[Automatic package for Erlang/OTP using Chocolatey-AU.
+    <description><![CDATA[**Erlang** is a programming language and runtime system for building massively scalable soft real-time systems with requirements on high availability.
 
-## Package Information
+**OTP** is a set of Erlang libraries, which consists of the Erlang runtime system, a number of ready-to-use components mainly written in Erlang, and a set of design principles for Erlang programs.
 
-- **Package ID**: erlang
-- **Maintainer**: Luke Bakken (@lukebakken)
-- **Source**: https://github.com/erlang/otp
-- **Icon**: https://raw.githubusercontent.com/chocolatey-beam/erlang-package/main/erlang-icon.png
+## Features
 
-## Update Process
+* **Concurrency** - Lightweight processes with message passing
+* **Distribution** - Built-in support for distributed systems
+* **Fault Tolerance** - Supervision trees and hot code swapping
+* **Soft Real-Time** - Predictable low-latency response times
+* **High Availability** - Design for systems that never stop
 
-This package uses Chocolatey-AU to automatically detect and update to the latest Erlang/OTP release.
+## Use Cases
 
-The update script:
-1. Fetches the latest release from GitHub
-2. Downloads Windows installers (32-bit and 64-bit)
-3. Calculates checksums
-4. Tests installation to detect ERTS version
-5. Updates nuspec and install scripts
-6. Packs the package
+Erlang is used in telecoms, banking, e-commerce, instant messaging, and any system requiring high availability and scalability.
 
-## Testing
-
-To test the package locally:
-
-```powershell
-$au_Force = $true
-.\update.ps1
-```
-
-## Notes
-
-- Package downloads installers from official Erlang/OTP GitHub releases
-- ERTS version is detected during update by test-installing Erlang
-- Supports both 32-bit and 64-bit Windows
-- Creates shims for common Erlang tools (erl, erlc, escript, etc.)
+Learn more at [erlang.org](https://www.erlang.org).
 ]]></description>
     <projectUrl>http://www.erlang.org/</projectUrl>
     <projectSourceUrl>https://github.com/erlang/otp</projectSourceUrl>
@@ -52,7 +33,7 @@ $au_Force = $true
     <copyright>https://www.erlang.org/EPLICENSE</copyright>
     <licenseUrl>http://www.erlang.org/EPLICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <iconUrl>https://raw.githubusercontent.com/chocolatey-beam/erlang-package/main/erlang-icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/chocolatey-beam/au-packages/refs/heads/main/icons/erlang.png</iconUrl>
     <docsUrl>http://erlang.org/doc/search/</docsUrl>
     <mailingListUrl>https://erlangforums.com</mailingListUrl>
     <bugTrackerUrl>https://github.com/erlang/otp/issues</bugTrackerUrl>

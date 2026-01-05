@@ -16,7 +16,7 @@
     <copyright>Copyright (c) 2012 Plataformatec</copyright>
     <licenseUrl>https://github.com/elixir-lang/elixir/blob/main/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <iconUrl>https://github.com/chocolatey-beam/au-packages/raw/main/@@PACKAGE_ID@@/elixir-icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/chocolatey-beam/au-packages/refs/heads/main/icons/elixir.png</iconUrl>
     <docsUrl>https://hexdocs.pm/elixir/</docsUrl>
     <mailingListUrl>https://elixir-lang.org/community.html</mailingListUrl>
     <bugTrackerUrl>https://github.com/elixir-lang/elixir/issues</bugTrackerUrl>
