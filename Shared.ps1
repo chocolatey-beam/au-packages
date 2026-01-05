@@ -166,3 +166,52 @@ function Get-OtpVersionsTable
     # Return content
     return Get-Content -Path $cacheFile -Raw
 }
+
+function ConvertTo-ChocolateyVersion
+{
+    <#
+    .SYNOPSIS
+    Normalizes a version string to Chocolatey's format
+
+    .DESCRIPTION
+    Chocolatey normalizes versions to Major.Minor.Build.Revision format.
+    This function converts version strings to match Chocolatey's normalization:
+    - 2 parts (28.3) -> 28.3.0
+    - 3 parts (27.3.4) -> 27.3.4 (unchanged)
+    - 4 parts (25.1.2.1) -> 25.1.2.1 (unchanged)
+
+    .PARAMETER Version
+    The version string to normalize
+
+    .EXAMPLE
+    ConvertTo-ChocolateyVersion '28.3'
+    Returns: 28.3.0
+
+    .EXAMPLE
+    ConvertTo-ChocolateyVersion '27.3.4'
+    Returns: 27.3.4
+    #>
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Version
+    )
+
+    $v = [version]$Version
+
+    # Build normalized version string based on which parts are present
+    if ($v.Revision -ne -1)
+    {
+        # 4 parts: Major.Minor.Build.Revision
+        return "$($v.Major).$($v.Minor).$($v.Build).$($v.Revision)"
+    }
+    elseif ($v.Build -ne -1)
+    {
+        # 3 parts: Major.Minor.Build
+        return "$($v.Major).$($v.Minor).$($v.Build)"
+    }
+    else
+    {
+        # 2 parts: Major.Minor - Chocolatey adds .0
+        return "$($v.Major).$($v.Minor).0"
+    }
+}

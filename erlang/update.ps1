@@ -67,7 +67,7 @@ function global:au_GetLatest
     }
 
     $release = $releaseJson | ConvertFrom-Json
-    $version = $release.tagName -replace '^OTP-', ''
+    $originalVersion = $release.tagName -replace '^OTP-', ''
 
     # Find installer assets
     $win32Asset = $release.assets | Where-Object { $_.name -match '^otp_win32_[0-9.]+\.exe$' }
@@ -78,14 +78,14 @@ function global:au_GetLatest
         throw "Could not find Windows installers in release assets"
     }
 
-    # Get ERTS version from otp_versions.table (cached)
+    # Get ERTS version from otp_versions.table (cached) using original version
     $otpVersionsContent = Get-OtpVersionsTable
 
     # Find the line for this OTP version and extract ERTS version
-    $otpLine = ($otpVersionsContent -split "`n") | Where-Object { $_ -match "^OTP-$version\s*:" } | Select-Object -First 1
+    $otpLine = ($otpVersionsContent -split "`n") | Where-Object { $_ -match "^OTP-$originalVersion\s*:" } | Select-Object -First 1
     if (-not $otpLine)
     {
-        throw "Could not find OTP-$version in otp_versions.table"
+        throw "Could not find OTP-$originalVersion in otp_versions.table"
     }
 
     if ($otpLine -match 'erts-([0-9.]+)')
@@ -96,6 +96,9 @@ function global:au_GetLatest
     {
         throw "Could not extract ERTS version from otp_versions.table"
     }
+
+    # Normalize version to Chocolatey format AFTER lookups (28.3 -> 28.3.0)
+    $normalizedVersion = ConvertTo-ChocolateyVersion $originalVersion
 
     $checksum32 = $null
     $checksum64 = $null
@@ -111,8 +114,8 @@ function global:au_GetLatest
         # Download installers to calculate checksums for older releases
         $win32Url = $win32Asset.url
         $win64Url = $win64Asset.url
-        $win32File = Join-Path $PSScriptRoot "otp_win32_$version.exe"
-        $win64File = Join-Path $PSScriptRoot "otp_win64_$version.exe"
+        $win32File = Join-Path $PSScriptRoot "otp_win32_$originalVersion.exe"
+        $win64File = Join-Path $PSScriptRoot "otp_win64_$originalVersion.exe"
 
         $jobs = @()
         $ProgressPreference = 'SilentlyContinue'
@@ -139,7 +142,7 @@ function global:au_GetLatest
     }
 
     return @{
-        Version = $version
+        Version = $normalizedVersion
         URL32 = $win32Asset.url
         URL64 = $win64Asset.url
         Checksum32 = $checksum32

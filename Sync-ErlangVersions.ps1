@@ -159,29 +159,8 @@ foreach ($line in $chocoOutput)
 Write-Information "Found $($publishedVersions.Count) published versions on chocolatey.org"
 
 # Find missing versions - normalize OTP versions to match Chocolatey format
-# Chocolatey normalizes versions to Major.Minor.Build.Revision format:
-# - 28.3 becomes 28.3.0
-# - 27.3.4 stays 27.3.4
-# - 25.1.2.1 stays 25.1.2.1
 $normalizedOtpVersions = $otpVersions | ForEach-Object {
-    $v = [version]$_
-
-    # Build normalized version string based on which parts are present
-    if ($v.Revision -ne -1)
-    {
-        # 4 parts: Major.Minor.Build.Revision
-        "$($v.Major).$($v.Minor).$($v.Build).$($v.Revision)"
-    }
-    elseif ($v.Build -ne -1)
-    {
-        # 3 parts: Major.Minor.Build
-        "$($v.Major).$($v.Minor).$($v.Build)"
-    }
-    else
-    {
-        # 2 parts: Major.Minor - Chocolatey adds .0
-        "$($v.Major).$($v.Minor).0"
-    }
+    ConvertTo-ChocolateyVersion $_
 }
 
 $missingVersions = @()
