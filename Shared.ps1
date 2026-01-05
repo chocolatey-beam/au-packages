@@ -24,7 +24,7 @@ function Get-RepositoryRoot
     $current = $PSScriptRoot
     while ($current -and -not (Test-Path -PathType Container -LiteralPath (Join-Path $current '.git')))
     {
-        $current = Split-Path -LiteralPath $current -Parent
+        $current = Split-Path -Path $current -Parent
     }
     if (-not $current)
     {

@@ -13,7 +13,7 @@ $packageName = 'elixir'
 $version = '1.19.4'
 $otpMajorVersion = '26'
 
-$toolsDir = Split-Path -LiteralPath $MyInvocation.MyCommand.Definition -Parent
+$toolsDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $zipFile = Join-Path -Path $toolsDir -ChildPath 'elixir.zip'
 
 # Verify the embedded file exists
