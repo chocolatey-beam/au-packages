@@ -101,8 +101,6 @@ foreach ($pkg in $packagesToGenerate)
     Copy-Item "$PSScriptRoot\tools\LICENSE.txt" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\tools\.skipAutoUninstall" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\README.md" "$packageDir\" -Force
-    Copy-Item "$PSScriptRoot\elixir-icon.png" "$packageDir\" -Force
-
     Write-Information "Package $packageName generated successfully"
 }
 

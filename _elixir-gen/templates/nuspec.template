@@ -7,7 +7,7 @@
     <authors>José Valim</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
     <summary>Elixir programming language</summary>
-    <description>Elixir is a dynamic, functional language for building scalable and maintainable applications. Elixir runs on the Erlang VM, known for creating low-latency, distributed, and fault-tolerant systems.</description>
+    <description>README INSERTED HERE</description>
     <projectUrl>https://elixir-lang.org/</projectUrl>
     <projectSourceUrl>https://github.com/elixir-lang/elixir</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey-beam/au-packages</packageSourceUrl>

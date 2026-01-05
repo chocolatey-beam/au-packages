@@ -1,38 +1,17 @@
-# Erlang Chocolatey Package
+**Erlang** is a programming language and runtime system for building massively scalable soft real-time systems with requirements on high availability.
 
-Automatic package for Erlang/OTP using Chocolatey-AU.
+**OTP** is a set of Erlang libraries, which consists of the Erlang runtime system, a number of ready-to-use components mainly written in Erlang, and a set of design principles for Erlang programs.
 
-## Package Information
+## Features
 
-- **Package ID**: erlang
-- **Maintainer**: Luke Bakken (@lukebakken)
-- **Source**: https://github.com/erlang/otp
-- **Icon**: https://raw.githubusercontent.com/chocolatey-beam/erlang-package/main/erlang-icon.png
+* **Concurrency** - Lightweight processes with message passing
+* **Distribution** - Built-in support for distributed systems
+* **Fault Tolerance** - Supervision trees and hot code swapping
+* **Soft Real-Time** - Predictable low-latency response times
+* **High Availability** - Design for systems that never stop
 
-## Update Process
+## Use Cases
 
-This package uses Chocolatey-AU to automatically detect and update to the latest Erlang/OTP release.
+Erlang is used in telecoms, banking, e-commerce, instant messaging, and any system requiring high availability and scalability.
 
-The update script:
-1. Fetches the latest release from GitHub
-2. Downloads Windows installers (32-bit and 64-bit)
-3. Calculates checksums
-4. Tests installation to detect ERTS version
-5. Updates nuspec and install scripts
-6. Packs the package
-
-## Testing
-
-To test the package locally:
-
-```powershell
-$au_Force = $true
-.\update.ps1
-```
-
-## Notes
-
-- Package downloads installers from official Erlang/OTP GitHub releases
-- ERTS version is detected during update by test-installing Erlang
-- Supports both 32-bit and 64-bit Windows
-- Creates shims for common Erlang tools (erl, erlc, escript, etc.)
+Learn more at [erlang.org](https://www.erlang.org).
