@@ -3,7 +3,7 @@
 Installs Rebar3 Erlang build tool
 
 .NOTES
-Author: Luke Bakken - luke@bakken.io
+Author: Luke Bakken - lukerbakken@gmail.com
 #>
 
 $ErrorActionPreference = 'Stop'

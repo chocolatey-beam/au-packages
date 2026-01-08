@@ -3,7 +3,7 @@
 An install script for installing Erlang silently on the machine via Chocolatey
 
 .NOTES
-Author: Luke Bakken - luke@bakken.io
+Author: Luke Bakken - lukerbakken@gmail.com
 #>
 $ErrorActionPreference = 'Stop'
 

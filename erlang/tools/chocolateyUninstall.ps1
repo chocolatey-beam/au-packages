@@ -3,7 +3,7 @@
 An uninstall script for Erlang
 
 .NOTES
-Author: Luke Bakken - luke@bakken.io
+Author: Luke Bakken - lukerbakken@gmail.com
 #>
 
 $package = 'erlang'

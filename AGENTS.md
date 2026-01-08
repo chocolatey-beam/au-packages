@@ -1035,4 +1035,4 @@ Moved all package icons to `icons/` directory with consistent naming. Updated UR
 ---
 
 **Last Updated:** January 5, 2026
-**Maintainer:** Luke Bakken (luke@bakken.io)
+**Maintainer:** Luke Bakken (lukerbakken@gmail.com)
