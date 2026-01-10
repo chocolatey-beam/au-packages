@@ -8,6 +8,8 @@ Validates PowerShell scripts in the AU packages repository.
 .DESCRIPTION
 Runs PSScriptAnalyzer on all PowerShell scripts to ensure they follow
 best practices and maintain consistent formatting.
+
+Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
 #>
 
 $InformationPreference = 'Continue'
