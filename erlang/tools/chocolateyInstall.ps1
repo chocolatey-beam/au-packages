@@ -8,11 +8,11 @@ Author: Luke Bakken - lukerbakken@gmail.com
 $ErrorActionPreference = 'Stop'
 
 $package = 'erlang'
-$url32 = 'https://github.com/erlang/otp/releases/download/OTP-28.3.1/otp_win32_28.3.1.exe'
-$url64 = 'https://github.com/erlang/otp/releases/download/OTP-28.3.1/otp_win64_28.3.1.exe'
-$checksum32 = 'a9e2720ecb5c771ff94813817fbd3ce1e5354acfe45e466a5948887b4b78bb21'
-$checksum64 = '8ea826e056002e70fdb3aab3cbe559e86e017d80e9c052e1966de8768627e53f'
-$ertsVersion = '16.2'
+$url32 = 'https://github.com/erlang/otp/releases/download/OTP-28.3.2/otp_win32_28.3.2.exe'
+$url64 = 'https://github.com/erlang/otp/releases/download/OTP-28.3.2/otp_win64_28.3.2.exe'
+$checksum32 = '2545a3e9a21760167436b15d0748d01d4d92ba8dc913d29e0b1c78a993733e5c'
+$checksum64 = '6f8fbdc224e30c9ae32da854f431ca54be7bbf6739eb446a42cf7edf0c1346cb'
+$ertsVersion = '16.2.1'
 
 $params = @{
     PackageName = $package
