@@ -51,7 +51,10 @@ function global:au_GetLatest
     # Get release from GitHub using gh CLI with assets
     if ($targetVersion -eq 'latest')
     {
-        $releaseJson = & gh.exe release view --repo erlang/otp --json 'tagName,url,assets'
+        $releaseTagNameJsonStr = & gh.exe release list --repo erlang/otp --limit 1 --json 'tagName'
+        $releaseTagNameJson = $releaseTagNameJsonStr | ConvertFrom-Json
+        $releaseTagName = $releaseTagNameJson.tagName
+        $releaseJson = & gh.exe release view --repo erlang/otp $releaseTagName --json 'tagName,url,assets'
     }
     else
     {
