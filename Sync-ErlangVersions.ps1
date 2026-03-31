@@ -117,21 +117,16 @@ if (Test-Path $stateFile)
 
 # Load otp_versions.table (cached)
 Write-Information "Loading otp_versions.table..."
-$otpVersionsContent = Get-OtpVersionsTable
+$otp = Get-OtpVersions
 
-# Parse OTP versions
-Write-Information "Parsing OTP versions..."
+# Filter OTP versions by major version range
+Write-Information "Filtering OTP versions..."
 $otpVersions = @()
-foreach ($line in $otpVersionsContent -split "`n")
+foreach ($version in $otp.Versions.Keys)
 {
-    if ($line -match '^OTP-(\d+)\.(\d+)(?:\.(\d+))?(?:\.(\d+))?')
+    if ($version -match '^(\d+)')
     {
-        $major = [int]$matches[1]
-        $version = $matches[1]
-        if ($matches[3]) { $version += ".$($matches[2]).$($matches[3])" }
-        elseif ($matches[2]) { $version += ".$($matches[2])" }
-        if ($matches[4]) { $version += ".$($matches[4])" }
-
+        $major = [int]$Matches[1]
         if ($major -ge $MinMajorVersion -and $major -le $MaxMajorVersion)
         {
             if (-not $SpecificVersion -or $version -eq $SpecificVersion)
