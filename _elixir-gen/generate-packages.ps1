@@ -18,19 +18,9 @@ $ErrorActionPreference = 'Stop'
 
 # Get latest OTP major version from otp_versions.table (cached)
 Write-Information "Loading otp_versions.table..."
-$otpVersionsContent = Get-OtpVersionsTable
+$otp = Get-OtpVersions
 
-# Parse first line to get latest OTP major version
-$firstLine = ($otpVersionsContent -split "`n")[0]
-if ($firstLine -match '^OTP-(\d+)')
-{
-    $latestOtpMajor = [int]$matches[1]
-}
-else
-{
-    throw "Could not parse latest OTP version from otp_versions.table"
-}
-
+$latestOtpMajor = $otp.LatestMajor
 Write-Information "Latest OTP major version: $latestOtpMajor"
 
 # Calculate supported OTP versions (latest + previous 2)

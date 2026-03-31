@@ -159,9 +159,22 @@ Copies all `.in` template files to working files (removes `.in` suffix). Used by
 
 **Note:** Erlang no longer uses templates - nuspec is committed directly.
 
-### Get-OtpVersionsTable
+### Get-OtpVersions
 
-Downloads and caches `otp_versions.table` from Erlang/OTP repository.
+Downloads and caches `otp_versions.table` from Erlang/OTP repository, returning a structured object.
+
+**Returns:** `PSCustomObject` with:
+- `LatestVersion` - Full version string (e.g., "28.4.1")
+- `LatestMajor` - Major version number as int (e.g., 28)
+- `Versions` - Hashtable mapping OTP version to ERTS version
+
+**Example:**
+```powershell
+$otp = Get-OtpVersions
+$otp.LatestVersion        # "28.4.1"
+$otp.LatestMajor          # 28
+$otp.Versions['28.4.1']   # "16.3" (ERTS version)
+```
 
 **Caching:**
 - Location: Repository root
@@ -170,9 +183,10 @@ Downloads and caches `otp_versions.table` from Erlang/OTP repository.
 - Validation: SHA256 checksum
 
 **Used by:**
-- `erlang/update.ps1` - Get ERTS version
-- `_elixir-gen/generate-packages.ps1` - Determine latest OTP
-- `Sync-ErlangVersions.ps1` - Parse all OTP versions
+- `erlang/update.ps1` - Get latest version and ERTS version
+- `_elixir-gen/generate-packages.ps1` - Determine latest OTP major
+- `Sync-ErlangVersions.ps1` - Get all OTP versions
+- `Test-LatestOtpVersion` - Check if OTP major changed
 
 ### Test-LatestOtpVersion
 

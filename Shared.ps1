@@ -92,25 +92,28 @@ function Copy-TemplateFile
     }
 }
 
-function Get-OtpVersionsTable
+function Get-OtpVersions
 {
     <#
     .SYNOPSIS
-    Gets the OTP versions table with caching and checksum validation
+    Gets parsed OTP versions data with caching
 
     .DESCRIPTION
     Downloads otp_versions.table from Erlang/OTP repository with local
     caching. Validates cached file with checksum and age (24 hours).
-    Re-downloads if cache is missing, stale, or checksum mismatch.
+    Returns a structured object with version information.
 
     .EXAMPLE
-    $content = Get-OtpVersionsTable
-    Returns the content of otp_versions.table
+    $otp = Get-OtpVersions
+    $otp.LatestVersion   # "28.4.1"
+    $otp.LatestMajor     # 28
+    $otp.Versions['28.4.1']  # "16.3" (ERTS version)
 
-    .NOTES
-    Cache location: Repository root
-    Cache files: otp_versions.table, otp_versions.table.sha256
-    Max age: 24 hours
+    .OUTPUTS
+    PSCustomObject with properties:
+    - LatestVersion: Full version string of latest release
+    - LatestMajor: Major version number (int)
+    - Versions: Hashtable mapping OTP version to ERTS version
     #>
 
     $repoRoot = Get-RepositoryRoot
@@ -121,7 +124,6 @@ function Get-OtpVersionsTable
 
     $needsDownload = $false
 
-    # Check if cache exists and is fresh
     if (Test-Path $cacheFile)
     {
         $fileAge = (Get-Date) - (Get-Item $cacheFile).LastWriteTime
@@ -131,7 +133,6 @@ function Get-OtpVersionsTable
         }
         elseif (Test-Path $checksumFile)
         {
-            # Validate checksum
             $cachedChecksum = Get-Content $checksumFile
             $currentChecksum = (Get-FileHash -Path $cacheFile -Algorithm SHA256).Hash.ToLowerInvariant()
             if ($cachedChecksum -ne $currentChecksum)
@@ -141,7 +142,6 @@ function Get-OtpVersionsTable
         }
         else
         {
-            # No checksum file, re-download to be safe
             $needsDownload = $true
         }
     }
@@ -152,19 +152,45 @@ function Get-OtpVersionsTable
 
     if ($needsDownload)
     {
-        # Download fresh copy
         $url = 'https://raw.githubusercontent.com/erlang/otp/refs/heads/master/otp_versions.table'
         $ProgressPreference = 'SilentlyContinue'
         Invoke-WebRequest -Uri $url -OutFile $cacheFile
         $ProgressPreference = 'Continue'
 
-        # Calculate and save checksum
         $checksum = (Get-FileHash -Path $cacheFile -Algorithm SHA256).Hash.ToLowerInvariant()
         Set-Content -Path $checksumFile -Value $checksum
     }
 
-    # Return content
-    return Get-Content -Path $cacheFile -Raw
+    # Parse the table
+    $content = Get-Content -Path $cacheFile
+    $versions = @{}
+    $latestVersion = $null
+    $latestMajor = $null
+
+    foreach ($line in $content)
+    {
+        if ($line -match '^OTP-([0-9.]+)\s*:.*erts-([0-9.]+)')
+        {
+            $otpVersion = $Matches[1]
+            $ertsVersion = $Matches[2]
+            $versions[$otpVersion] = $ertsVersion
+
+            if ($null -eq $latestVersion)
+            {
+                $latestVersion = $otpVersion
+                if ($otpVersion -match '^(\d+)')
+                {
+                    $latestMajor = [int]$Matches[1]
+                }
+            }
+        }
+    }
+
+    return [PSCustomObject]@{
+        LatestVersion = $latestVersion
+        LatestMajor = $latestMajor
+        Versions = $versions
+    }
 }
 
 function Test-LatestOtpVersion
@@ -189,13 +215,12 @@ function Test-LatestOtpVersion
         throw "Tracking file not found: $trackedFile"
     }
 
-    $trackedOtp = Get-Content $trackedFile
-    $otpContent = Get-OtpVersionsTable
-    $latestOtp = ($otpContent -split "`n")[0] -replace '^OTP-(\d+).*', '$1'
+    $trackedOtp = [int](Get-Content $trackedFile)
+    $otp = Get-OtpVersions
 
-    if ($latestOtp -ne $trackedOtp)
+    if ($otp.LatestMajor -ne $trackedOtp)
     {
-        throw "OTP version changed from $trackedOtp to $latestOtp! Regenerate Elixir packages with generate-packages.ps1 and update .latest_otp_version"
+        throw "OTP version changed from $trackedOtp to $($otp.LatestMajor)! Regenerate Elixir packages with generate-packages.ps1 and update .latest_otp_version"
     }
 }
 

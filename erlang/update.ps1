@@ -48,18 +48,17 @@ function global:au_GetLatest
         'latest'
     }
 
-    # Get release from GitHub using gh CLI with assets
+    # Get OTP versions table (cached)
+    $otp = Get-OtpVersions
+
+    # Determine target version
     if ($targetVersion -eq 'latest')
     {
-        $releaseTagNameJsonStr = & gh.exe release list --repo erlang/otp --limit 1 --json 'tagName'
-        $releaseTagNameJson = $releaseTagNameJsonStr | ConvertFrom-Json
-        $releaseTagName = $releaseTagNameJson.tagName
-        $releaseJson = & gh.exe release view --repo erlang/otp $releaseTagName --json 'tagName,url,assets'
+        $targetVersion = $otp.LatestVersion
     }
-    else
-    {
-        $releaseJson = & gh.exe release view --repo erlang/otp "OTP-$targetVersion" --json 'tagName,url,assets'
-    }
+
+    # Get release from GitHub using gh CLI
+    $releaseJson = & gh.exe release view --repo erlang/otp "OTP-$targetVersion" --json 'tagName,url,assets'
 
     if ($LASTEXITCODE -ne 0)
     {
@@ -78,21 +77,9 @@ function global:au_GetLatest
         throw "Could not find Windows installers in release assets"
     }
 
-    # Get ERTS version from otp_versions.table (cached) using original version
-    $otpVersionsContent = Get-OtpVersionsTable
-
-    # Find the line for this OTP version and extract ERTS version
-    $otpLine = ($otpVersionsContent -split "`n") | Where-Object { $_ -match "^OTP-$originalVersion\s*:" } | Select-Object -First 1
-    if (-not $otpLine)
-    {
-        throw "Could not find OTP-$originalVersion in otp_versions.table"
-    }
-
-    if ($otpLine -match 'erts-([0-9.]+)')
-    {
-        $ertsVersion = $Matches[1]
-    }
-    else
+    # Get ERTS version from parsed table
+    $ertsVersion = $otp.Versions[$originalVersion]
+    if (-not $ertsVersion)
     {
         throw "Could not extract ERTS version from otp_versions.table"
     }

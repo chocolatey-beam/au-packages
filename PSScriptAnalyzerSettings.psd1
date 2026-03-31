@@ -2,6 +2,11 @@
     # Include all default rules plus formatting
     IncludeDefaultRules = $true
 
+    # Exclude rules that don't apply
+    ExcludeRules = @(
+        'PSUseSingularNouns'  # Get-OtpVersions returns multiple versions
+    )
+
     # Formatting rules
     Rules = @{
         PSUseConsistentIndentation = @{
