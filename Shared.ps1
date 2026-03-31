@@ -188,8 +188,8 @@ function Get-OtpVersions
 
     return [PSCustomObject]@{
         LatestVersion = $latestVersion
-        LatestMajor   = $latestMajor
-        Versions      = $versions
+        LatestMajor = $latestMajor
+        Versions = $versions
     }
 }
 
