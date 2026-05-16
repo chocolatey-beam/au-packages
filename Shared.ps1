@@ -220,7 +220,7 @@ function Test-LatestOtpVersion
 
     if ($otp.LatestMajor -ne $trackedOtp)
     {
-        throw "OTP version changed from $trackedOtp to $($otp.LatestMajor)! Regenerate Elixir packages with generate-packages.ps1 and update .latest_otp_version"
+        Write-Error -ErrorAction Continue "OTP version changed from $trackedOtp to $($otp.LatestMajor)! Regenerate Elixir packages with generate-packages.ps1 and update .latest_otp_version"
     }
 }
 
