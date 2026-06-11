@@ -3,7 +3,7 @@
   <metadata>
     <id>erlang</id>
     <title>Erlang</title>
-    <version>29.0.1</version>
+    <version>29.0.2</version>
     <authors>Joe Armstrong,Robert Virding,Mike Williams</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
     <summary>Erlang/OTP - for building concurrent, distributed, and fault tolerant systems</summary>
@@ -26,7 +26,7 @@ Learn more at [erlang.org](https://www.erlang.org).
     <projectUrl>http://www.erlang.org/</projectUrl>
     <projectSourceUrl>https://github.com/erlang/otp</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey-beam/au-packages</packageSourceUrl>
-    <releaseNotes>https://github.com/erlang/otp/releases/tag/OTP-29.0.1</releaseNotes>
+    <releaseNotes>https://github.com/erlang/otp/releases/tag/OTP-29.0.2</releaseNotes>
     <tags>erlang languages</tags>
     <copyright>https://www.erlang.org/EPLICENSE</copyright>
     <licenseUrl>http://www.erlang.org/EPLICENSE</licenseUrl>
