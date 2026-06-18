@@ -57,7 +57,7 @@ Full documentation available at [rebar3.org/docs](https://rebar3.org/docs)
     <mailingListUrl>https://github.com/erlang/rebar3#additional-resources</mailingListUrl>
     <bugTrackerUrl>https://github.com/erlang/rebar3/issues</bugTrackerUrl>
     <dependencies>
-      <dependency id="erlang" version="[26.0,29.0)" />
+      <dependency id="erlang" version="[26.0,30.0)" />
     </dependencies>
   </metadata>
   <files>

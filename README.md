@@ -2,24 +2,29 @@
 
 [![update-au-packages](https://github.com/chocolatey-beam/au-packages/actions/workflows/update.yml/badge.svg)](https://github.com/chocolatey-beam/au-packages/actions/workflows/update.yml)
 [![validate-powershell-scripts](https://github.com/chocolatey-beam/au-packages/actions/workflows/validate.yml/badge.svg)](https://github.com/chocolatey-beam/au-packages/actions/workflows/validate.yml)
-[![Update status](https://img.shields.io/badge/Update-Status-blue)](https://gist.github.com/lukebakken/7c671e5b6c0431b43e29fe2446e212c4)
+[![Update status](https://img.shields.io/badge/Update-Status-blue)](https://gist.github.com/lukebakken/96651abeef638791b0d99ce486b6454a)
 
-This repository contains Chocolatey packages managed with the [AU (Automatic Updater)](https://github.com/majkinetor/au) framework.
+This repository contains Chocolatey packages managed with the [AU (Automatic Updater)](https://github.com/chocolatey-community/chocolatey-au) framework.
 
 ## Packages
 
+- **[erlang](https://community.chocolatey.org/packages/erlang)** - Erlang/OTP runtime
+- **[elixir](https://community.chocolatey.org/packages/elixir)** - Elixir programming language
+- **[elixir-otp-27](https://community.chocolatey.org/packages/elixir-otp-27)** - Elixir (OTP 27)
+- **[elixir-otp-28](https://community.chocolatey.org/packages/elixir-otp-28)** - Elixir (OTP 28)
+- **[elixir-otp-29](https://community.chocolatey.org/packages/elixir-otp-29)** - Elixir (OTP 29)
 - **[rebar3](https://community.chocolatey.org/packages/rebar3)** - Erlang build tool
 
 ## Automated Updates
 
-A GitHub Actions workflow runs weekly to automatically check for new package versions and publish updates to chocolatey.org.
+A GitHub Actions workflow runs daily to automatically check for new package versions and publish updates to chocolatey.org.
 
 ## Local Development
 
 ### Prerequisites
 
 - PowerShell 7+
-- [AU Module](https://github.com/majkinetor/au): `Install-Module AU -Scope CurrentUser`
+- [AU Module](https://github.com/chocolatey-community/chocolatey-au): `Install-Module Chocolatey-AU -Scope CurrentUser`
 - [gh CLI](https://cli.github.com/) for GitHub API access
 
 ### Testing a Package
@@ -110,7 +115,7 @@ Runs on every push and pull request:
 
 ### Update Workflow
 
-Runs weekly (Sunday 5:30 AM UTC):
+Runs daily (5:30 AM UTC):
 - Checks all packages for updates
 - Downloads new versions
 - Pushes to chocolatey.org automatically

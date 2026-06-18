@@ -17,7 +17,7 @@ This repository manages Chocolatey packages for BEAM ecosystem tools (Erlang, El
 
 1. **Erlang** - Single package, downloads installers at install time
 2. **rebar3** - Single package, embeds binary in nupkg
-3. **Elixir** - Four packages generated from templates (elixir, elixir-otp-26, elixir-otp-27, elixir-otp-28)
+3. **Elixir** - Four packages generated from templates (elixir, elixir-otp-27, elixir-otp-28, elixir-otp-29)
 
 **Key principle:** Nuspec files are committed with current versions, not templates with 0.0.0. AU updates them in place when new versions are released.
 
@@ -34,18 +34,17 @@ au-packages/
 │   ├── templates/              # Nuspec and update.ps1 templates
 │   └── tools/                  # Static install/uninstall scripts
 ├── elixir/                     # Generated package (committed)
-├── elixir-otp-26/              # Generated package (committed)
 ├── elixir-otp-27/              # Generated package (committed)
 ├── elixir-otp-28/              # Generated package (committed)
+├── elixir-otp-29/              # Generated package (committed)
 ├── erlang/                     # Erlang package
-│   ├── erlang.nuspec           # Version 28.3.0 (committed)
+│   ├── erlang.nuspec           # Version 29.0.2 (committed)
 │   ├── update.ps1              # AU update script
 │   └── tools/                  # Install/uninstall scripts
 ├── rebar3/                     # rebar3 package
-│   ├── rebar3.nuspec           # Version 3.25.1 (committed)
-│   ├── rebar3.nuspec.in        # Template (still used)
+│   ├── rebar3.nuspec           # Version 3.27.0 (committed)
 │   ├── update.ps1              # AU update script
-│   └── tools/                  # Install/uninstall scripts + templates
+│   └── tools/                  # Install/uninstall scripts
 ├── icons/                      # Centralized package icons
 │   ├── elixir.png
 │   ├── erlang.png
@@ -57,7 +56,7 @@ au-packages/
 ├── Test-LatestOtpVersion.ps1   # OTP version check
 ├── Sync-ErlangVersions.ps1     # Batch Erlang version publisher
 ├── Push-ElixirPackages.ps1     # Force push Elixir packages
-├── .latest_otp_version         # Tracks OTP major version (28)
+├── .latest_otp_version         # Tracks OTP major version (29)
 ├── PSScriptAnalyzerSettings.psd1
 └── README.md
 ```
@@ -79,7 +78,7 @@ au-packages/
 
 **What:** Erlang/OTP programming language and runtime
 **Source:** https://github.com/erlang/otp
-**Current Version:** 28.3.0
+**Current Version:** 29.0.2
 **Package Type:** Downloads installers at install time (not embedded)
 
 **Key features:**
@@ -100,14 +99,13 @@ au-packages/
 
 **What:** Erlang build tool
 **Source:** https://github.com/erlang/rebar3
-**Current Version:** 3.25.1
+**Current Version:** 3.27.0
 **Package Type:** Embeds escript binary in nupkg (~842KB)
 
 **Key features:**
 - Binary has no file extension (rebar3, not rebar3.escript)
 - Includes wrapper scripts (rebar3.cmd, rebar3.ps1)
 - Uses `Get-RemoteFiles` to download and embed
-- Still uses `.in` templates for some files
 
 **Special handling:**
 - Extensionless file requires `<file src="tools/**" target="tools" />` wildcard
@@ -118,14 +116,14 @@ au-packages/
 
 **What:** Elixir programming language
 **Source:** https://github.com/elixir-lang/elixir
-**Current Version:** 1.19.4
+**Current Version:** 1.20.1
 **Package Type:** Embeds zip files in nupkg (~8MB each)
 
 **Packages:**
-- `elixir` - Latest OTP (currently 28)
+- `elixir` - Latest OTP (currently 29)
+- `elixir-otp-29` - Specific OTP 29
 - `elixir-otp-28` - Specific OTP 28
 - `elixir-otp-27` - Specific OTP 27
-- `elixir-otp-26` - Specific OTP 26
 
 **Key features:**
 - Generated from templates in `_elixir-gen/`
@@ -155,25 +153,23 @@ Imports Chocolatey-AU module from submodule or global install. Checks for global
 
 ### Copy-TemplateFile
 
-Copies all `.in` template files to working files (removes `.in` suffix). Used by rebar3 package which still uses templates.
-
-**Note:** Erlang no longer uses templates - nuspec is committed directly.
+Copies all `.in` template files to working files (removes `.in` suffix). Currently unused - all packages now commit working files directly. May be removed in the future.
 
 ### Get-OtpVersions
 
 Downloads and caches `otp_versions.table` from Erlang/OTP repository, returning a structured object.
 
 **Returns:** `PSCustomObject` with:
-- `LatestVersion` - Full version string (e.g., "28.4.1")
-- `LatestMajor` - Major version number as int (e.g., 28)
+- `LatestVersion` - Full version string (e.g., "29.0.2")
+- `LatestMajor` - Major version number as int (e.g., 29)
 - `Versions` - Hashtable mapping OTP version to ERTS version
 
 **Example:**
 ```powershell
 $otp = Get-OtpVersions
-$otp.LatestVersion        # "28.4.1"
-$otp.LatestMajor          # 28
-$otp.Versions['28.4.1']   # "16.3" (ERTS version)
+$otp.LatestVersion        # "29.0.2"
+$otp.LatestMajor          # 29
+$otp.Versions['29.0.2']   # "17.0.2" (ERTS version)
 ```
 
 **Caching:**
@@ -264,7 +260,7 @@ Standalone script that checks if OTP major version has changed. Called by workfl
   run: ${{ github.workspace }}\Test-LatestOtpVersion.ps1
 ```
 
-**When it fails:** OTP 29 released, Elixir packages need regeneration for OTP 26/27/28/29.
+**When it fails:** A new OTP major version was released, Elixir packages need regeneration.
 
 ### Sync-ErlangVersions.ps1
 
@@ -349,7 +345,7 @@ Configured in `Update-Packages.ps1`:
 **History** - Tracks update history
 **Gist** - Publishes reports to GitHub gist
 **Git** - Commits updated files back to repository
-**GitReleases** - Creates GitHub releases (not used)
+**GitReleases** - Creates GitHub releases (one per package update)
 **RunInfo** - Saves run information (fixed for PowerShell 7)
 
 ### Global Functions Persistence
@@ -531,17 +527,13 @@ $targetVersion = if ($Version) {
 
 ### Template vs Committed Files
 
-**Elixir (templates):**
-- Templates in `_elixir-gen/`
+**Elixir (generated from templates):**
+- Templates in `_elixir-gen/templates/`
+- Static tools files in `_elixir-gen/tools/`
 - Generated packages committed to git
-- Regenerate manually when OTP version changes
+- Regenerate manually when OTP major version changes
 
-**rebar3 (hybrid):**
-- Some `.in` templates (nuspec, install, VERIFICATION.txt)
-- Working files committed with current version
-- `Copy-TemplateFile` copies templates before AU runs
-
-**Erlang (no templates):**
+**Erlang, rebar3 (no templates):**
 - All files committed directly
 - AU updates in place
 - No template copying needed
@@ -628,13 +620,14 @@ Remove-Variable -Name au_* -Scope Global -ErrorAction Ignore
 
 ### OTP Version Check Fails
 
-**Cause:** OTP major version changed (e.g., OTP 29 released).
+**Cause:** A new OTP major version was released.
 
 **Solution:**
 1. Update `.latest_otp_version` to new version
 2. Run `_elixir-gen\generate-packages.ps1`
-3. Commit all generated Elixir packages
-4. Push changes
+3. Delete the oldest `elixir-otp-N` directory (no longer generated)
+4. Commit all changes (new + updated + deleted packages + tracking file)
+5. Push changes
 
 ### Workflow Fails to Commit
 
@@ -666,14 +659,15 @@ Remove-Variable -Name au_* -Scope Global -ErrorAction Ignore
 
 ### Updating Elixir Packages When OTP Changes
 
-When OTP 29 is released:
+When the next OTP major version is released (e.g., OTP 30):
 
 1. Workflow fails with OTP version mismatch
-2. Update `.latest_otp_version` to `29`
+2. Update `.latest_otp_version` to new version
 3. Run `_elixir-gen\generate-packages.ps1`
-4. Review generated packages
-5. Commit all changes (4 packages + tracking file)
-6. Push to trigger workflow
+4. Delete the oldest `elixir-otp-N` directory (no longer generated)
+5. Review generated packages
+6. Commit all changes (new package + updated packages + deleted package + tracking file)
+7. Push to trigger workflow
 
 ### Batch Publishing Erlang Versions
 
@@ -796,11 +790,6 @@ Remove-Item Env:\au_* -ErrorAction Ignore
 - `au_BeforeUpdate` - Downloads binary, renames from .escript to no extension
 - `au_SearchReplace` - Updates version in install script and VERIFICATION.txt
 
-**Template handling:**
-- Still uses `.in` templates for nuspec, install, VERIFICATION.txt
-- `Copy-TemplateFile` copies before AU runs
-- Working files committed with current version
-
 **Binary handling:**
 - Downloads as `rebar3.escript`
 - Renames to `rebar3` (no extension)
@@ -897,16 +886,19 @@ $au_WhatIf = $false
 ### Elixir Regeneration
 
 ```powershell
-# When OTP 29 is released
+# When a new OTP major version is released (e.g., OTP 30)
 cd _elixir-gen
 .\generate-packages.ps1
 
 # Update tracking file
-"29" | Set-Content ..\.latest_otp_version
+"30" | Set-Content ..\.latest_otp_version
+
+# Delete the oldest package directory (no longer generated)
+Remove-Item -Recurse -Force ..\elixir-otp-27
 
 # Commit all changes
-git add ../elixir* ../.latest_otp_version
-git commit -m "Regenerate Elixir packages for OTP 29"
+git add ../elixir* ../.latest_otp_version ..\elixir-otp-27
+git commit -m "Regenerate Elixir packages for OTP 30"
 ```
 
 ### Validation
@@ -991,7 +983,7 @@ https://github.com/chocolatey-beam/au-packages/raw/main/icons/package.png
 ### This Repository
 
 - **Repository:** https://github.com/chocolatey-beam/au-packages
-- **Gist (updates):** https://gist.github.com/lukebakken/7c671e5b6c0431b43e29fe2446e212c4
+- **Gist (updates):** https://gist.github.com/lukebakken/96651abeef638791b0d99ce486b6454a
 - **AU Fork:** https://github.com/chocolatey-beam/cc-chocolatey-au
 
 ### Upstream
@@ -1014,6 +1006,9 @@ https://github.com/chocolatey-beam/au-packages/raw/main/icons/package.png
 - **Our Packages:**
   - https://community.chocolatey.org/packages/erlang
   - https://community.chocolatey.org/packages/elixir
+  - https://community.chocolatey.org/packages/elixir-otp-27
+  - https://community.chocolatey.org/packages/elixir-otp-28
+  - https://community.chocolatey.org/packages/elixir-otp-29
   - https://community.chocolatey.org/packages/rebar3
 
 ### External
@@ -1022,6 +1017,66 @@ https://github.com/chocolatey-beam/au-packages/raw/main/icons/package.png
 - **Elixir:** https://github.com/elixir-lang/elixir
 - **rebar3:** https://github.com/erlang/rebar3
 - **gh CLI:** https://cli.github.com/manual/
+
+## Chocolatey Community Repository API
+
+The Chocolatey Community Repository (CCR) exposes a public OData v2 (NuGet v2 compatible) API. No authentication is required for read operations.
+
+**Base URL:** `https://community.chocolatey.org/api/v2/`
+
+### Key Endpoints
+
+| Purpose | URL |
+|---------|-----|
+| All versions of a package | `FindPackagesById()?id='package-name'` |
+| Specific version | `Packages(Id='package-name',Version='1.2.3')` |
+| Search | `Search()?searchTerm='term'&targetFramework=''&includePrerelease=false` |
+| Web page (AU uses this) | `https://community.chocolatey.org/packages/{id}/{version}` |
+| Push (write, needs API key) | `https://push.chocolatey.org/` |
+
+### Useful OData Queries
+
+```bash
+# Get all versions of a package with status
+curl -s "https://community.chocolatey.org/api/v2/FindPackagesById()?id='erlang'" \
+  | grep -o '<d:Version>[^<]*\|<d:PackageStatus>[^<]*\|<d:PackageSubmittedStatus>[^<]*'
+
+# Check a specific version
+curl -s "https://community.chocolatey.org/api/v2/Packages(Id='erlang',Version='28.3.0')" \
+  | grep -o '<d:Version>[^<]*\|<d:PackageStatus>[^<]*\|<d:PackageSubmittedStatus>[^<]*'
+
+# Check if a version exists (how AU does it)
+curl -s -o /dev/null -w "%{http_code}" "https://community.chocolatey.org/packages/erlang/28.3.0"
+# 200 = exists, 404 = does not exist
+```
+
+### Moderation Status Fields
+
+Each package entry includes Chocolatey-specific moderation fields:
+
+| Field | Values | Meaning |
+|-------|--------|---------|
+| `PackageStatus` | Approved, Submitted, Rejected | Overall state |
+| `PackageSubmittedStatus` | Ready, Pending, Waiting | Submission pipeline state |
+| `PackageTestResultStatus` | Passing, Failing, Pending | Automated test result |
+| `PackageValidationResultStatus` | Passing, Failing | Validation check result |
+| `IsApproved` | true/false | Whether version is approved |
+
+**Known issue (June 2026):** `elixir-otp-27` and `elixir-otp-28` packages have
+`PackageSubmittedStatus: Waiting` on their approved versions, which correlates with
+403 errors when pushing new versions. The `elixir` package (which pushes fine) has
+`PackageSubmittedStatus: Ready`. New packages like `elixir-otp-29` push successfully.
+This may require resolution through the Chocolatey moderation interface.
+
+### How AU Checks Version Existence
+
+AU does NOT use the OData API. It makes an HTTP GET to the web page URL:
+`https://chocolatey.org/packages/{PackageName}/{Version}`
+
+- HTTP 200: Version exists, skip update
+- HTTP 404: Version does not exist, proceed with update
+
+This is controlled by `$au_GalleryPackageRootUrl` (defaults to `https://chocolatey.org/packages`).
 
 ## Recent Changes (January 2026)
 
@@ -1046,7 +1101,28 @@ Added `.latest_otp_version` file and `Test-LatestOtpVersion` function/script. Wo
 
 Moved all package icons to `icons/` directory with consistent naming. Updated URLs to use `raw.githubusercontent.com` format.
 
+## Recent Changes (June 2026)
+
+### Elixir Package Regeneration for OTP 29
+
+Elixir v1.20.1 dropped OTP 26 support and added OTP 29. Shifted package set from
+OTP 26/27/28 to OTP 27/28/29. The `elixir-otp-26` package directory was removed
+and `elixir-otp-29` was added.
+
+### README Template Parameterization
+
+Moved `_elixir-gen/README.md` to `_elixir-gen/templates/README.md.template` with
+`@@OTP_MAJOR@@` placeholder. Each generated package now gets a README that correctly
+states its own OTP version requirement.
+
+### UPDATED_BY_AU Placeholders
+
+Replaced specific version/URL/checksum values in `_elixir-gen/tools/chocolateyInstall.ps1`
+and `_elixir-gen/tools/VERIFICATION.txt` with `UPDATED_BY_AU` placeholders. These
+are static files copied by the generator; AU's `au_SearchReplace` fills them on
+first update run.
+
 ---
 
-**Last Updated:** January 5, 2026
+**Last Updated:** June 18, 2026
 **Maintainer:** Luke Bakken (lukerbakken@gmail.com)
