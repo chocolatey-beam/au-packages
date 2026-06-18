@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 Installs Elixir programming language
 
@@ -10,8 +10,8 @@ $ErrorActionPreference = 'Stop'
 $InformationPreference = 'Continue'
 
 $packageName = 'elixir'
-$version = '1.19.5'
-$otpMajorVersion = '28'
+$version = 'UPDATED_BY_AU'
+$otpMajorVersion = 'UPDATED_BY_AU'
 
 $toolsDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $zipFile = Join-Path -Path $toolsDir -ChildPath 'elixir.zip'

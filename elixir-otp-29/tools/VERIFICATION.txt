@@ -4,9 +4,9 @@ in verifying that this package's contents are trustworthy.
 
 The embedded Elixir zip file is obtained from the official GitHub releases:
 
-Version : 1.19.5
-URL     : https://github.com/elixir-lang/elixir/releases/download/v1.19.5/elixir-otp-26.zip
-Checksum: DB6701F2232BE899190ECB8DBF280104FE2434675093C2B5935E563A08052AFB
+Version : UPDATED_BY_AU
+URL     : UPDATED_BY_AU
+Checksum: UPDATED_BY_AU
 
 The checksum can be verified by running:
   Get-FileHash -Path elixir.zip -Algorithm SHA256
