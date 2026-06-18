@@ -3,7 +3,7 @@ Import-AUModule
 
 $InformationPreference = 'Continue'
 
-$otpMajorVersion = 28
+$otpMajorVersion = 29
 
 function global:au_SearchReplace
 {

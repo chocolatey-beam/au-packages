@@ -27,7 +27,7 @@ mix test               # Run tests
 
 ## Requirements
 
-This package requires Erlang/OTP 28.x. The `erlang` Chocolatey package will be installed automatically if not present.
+This package requires Erlang/OTP 29.x. The `erlang` Chocolatey package will be installed automatically if not present.
 
 ## Documentation
 

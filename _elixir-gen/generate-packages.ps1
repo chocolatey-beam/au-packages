@@ -90,7 +90,9 @@ foreach ($pkg in $packagesToGenerate)
     Copy-Item "$PSScriptRoot\tools\VERIFICATION.txt" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\tools\LICENSE.txt" "$packageDir\tools\" -Force
     Copy-Item "$PSScriptRoot\tools\.skipAutoUninstall" "$packageDir\tools\" -Force
-    Copy-Item "$PSScriptRoot\README.md" "$packageDir\" -Force
+    $readmeContent = Get-Content "$PSScriptRoot\templates\README.md.template" -Raw
+    $readmeContent = $readmeContent -replace '@@OTP_MAJOR@@', $otpMajor
+    Set-Content -Path "$packageDir\README.md" -Value $readmeContent
     Write-Information "Package $packageName generated successfully"
 }
 

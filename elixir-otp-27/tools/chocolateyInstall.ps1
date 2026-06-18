@@ -10,8 +10,8 @@ $ErrorActionPreference = 'Stop'
 $InformationPreference = 'Continue'
 
 $packageName = 'elixir'
-$version = '1.19.5'
-$otpMajorVersion = '27'
+$version = '1.19.4'
+$otpMajorVersion = '28'
 
 $toolsDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 $zipFile = Join-Path -Path $toolsDir -ChildPath 'elixir.zip'

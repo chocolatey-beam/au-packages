@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>elixir-otp-27</id>
-    <title>Elixir (OTP 27)</title>
+    <id>elixir-otp-29</id>
+    <title>Elixir (OTP 29)</title>
     <version>0.0.0</version>
     <authors>José Valim</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
@@ -21,7 +21,7 @@
     <mailingListUrl>https://elixir-lang.org/community.html</mailingListUrl>
     <bugTrackerUrl>https://github.com/elixir-lang/elixir/issues</bugTrackerUrl>
     <dependencies>
-      <dependency id="erlang" version="[27.0,28.0)" />
+      <dependency id="erlang" version="[29.0,30.0)" />
     </dependencies>
   </metadata>
   <files>
