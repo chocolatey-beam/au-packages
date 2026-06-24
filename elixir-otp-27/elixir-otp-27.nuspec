@@ -3,7 +3,7 @@
   <metadata>
     <id>elixir-otp-27</id>
     <title>Elixir (OTP 27)</title>
-    <version>1.20.1</version>
+    <version>1.20.2</version>
     <authors>José Valim</authors>
     <owners>Luke Bakken, Team RabbitMQ</owners>
     <summary>Elixir programming language</summary>
@@ -43,7 +43,7 @@ Full documentation available at [hexdocs.pm/elixir](https://hexdocs.pm/elixir/)
     <projectUrl>https://elixir-lang.org/</projectUrl>
     <projectSourceUrl>https://github.com/elixir-lang/elixir</projectSourceUrl>
     <packageSourceUrl>https://github.com/chocolatey-beam/au-packages</packageSourceUrl>
-    <releaseNotes>https://github.com/elixir-lang/elixir/releases/tag/v1.20.1</releaseNotes>
+    <releaseNotes>https://github.com/elixir-lang/elixir/releases/tag/v1.20.2</releaseNotes>
     <tags>elixir erlang programming language functional</tags>
     <copyright>Copyright (c) 2012 Plataformatec</copyright>
     <licenseUrl>https://github.com/elixir-lang/elixir/blob/main/LICENSE</licenseUrl>
