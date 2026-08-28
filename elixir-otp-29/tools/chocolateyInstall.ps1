@@ -10,7 +10,7 @@ $ErrorActionPreference = 'Stop'
 $InformationPreference = 'Continue'
 
 $packageName = 'elixir'
-$version = '1.20.1'
+$version = '1.20.4'
 $otpMajorVersion = '29'
 
 $toolsDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
