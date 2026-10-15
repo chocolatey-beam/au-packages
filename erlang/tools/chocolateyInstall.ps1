@@ -8,9 +8,9 @@ Author: Luke Bakken - lukerbakken@gmail.com
 $ErrorActionPreference = 'Stop'
 
 $package = 'erlang'
-$url64 = 'https://github.com/erlang/otp/releases/download/OTP-29.1.1/otp_win64_29.1.1.exe'
-$checksum64 = '2777de1a544dfcf65e3e4f2f50a73505a443056e33e6f50498f36e7bf75c9a5c'
-$ertsVersion = '17.1'
+$url64 = 'https://github.com/erlang/otp/releases/download/OTP-29.1.2/otp_win64_29.1.2.exe'
+$checksum64 = '38297ee6fa8cafbc016cb187ebda30f7bdae85618415d9dbbbe413e9b9e27a4e'
+$ertsVersion = '17.1.1'
 
 $params = @{
     PackageName = $package
